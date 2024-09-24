@@ -1,3 +1,5 @@
+"use server";
+
 import { lucia, validateRequest } from "@/lib/auth";
 import { db } from "@/lib/database";
 import { users } from "@/lib/database/schema";
@@ -8,6 +10,16 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+export type ActionState = {
+  error?: string;
+  errors?: {
+    email?: string[] | undefined;
+    password?: string[] | undefined;
+  };
+  success?: string;
+  [key: string]: any;
+};
+
 const signUpSchema = z.object({
   email: z.string().email().min(2),
   password: z
@@ -15,17 +27,14 @@ const signUpSchema = z.object({
     .min(6, { message: "password must be at least 6 characters" }),
 });
 
-export async function signup(
-  _: any,
-  formData: FormData,
-): Promise<ActionResult> {
-  "use server";
+export async function signup(prevState: ActionState, formData: FormData) {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
   if (!userData.success) {
     return {
+      errors: userData.error.flatten().fieldErrors,
       error: "invalid email or password",
     };
   }
@@ -55,9 +64,15 @@ export async function signup(
     );
   } catch (err) {
     if (err instanceof Error) {
-      return {
-        error: err.message,
-      };
+      if (err.message.includes("user_email_unique")) {
+        return {
+          error: "Email already in use",
+        };
+      } else {
+        return {
+          error: err.message,
+        };
+      }
     }
 
     return {
@@ -69,7 +84,6 @@ export async function signup(
 }
 
 export async function logout(): Promise<ActionResult> {
-  "use server";
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -89,7 +103,6 @@ export async function logout(): Promise<ActionResult> {
 }
 
 export async function login(_: any, formData: FormData): Promise<ActionResult> {
-  "use server";
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );

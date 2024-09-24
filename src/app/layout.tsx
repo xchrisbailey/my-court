@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/lib/Form";
-import { logout } from "./actions";
+import { logout } from "./(auth)/actions";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,9 +29,9 @@ export default function RootLayout({
         <header className="flex justify-between">
           <div>my court</div>
           <div>
-            <Form action={logout}>
+            <form action={logout}>
               <Button>logout</Button>
-            </Form>
+            </form>
           </div>
         </header>
         <main className="container mx-auto">{children}</main>
