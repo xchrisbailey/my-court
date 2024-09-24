@@ -1,19 +1,19 @@
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { sessions, users, User as DatabaseUser } from "./database/schema";
-import { db } from "./database";
-import { Lucia, Session, User } from "lucia";
-import { cookies } from "next/headers";
-import { cache } from "react";
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { Lucia, Session, User } from 'lucia';
+import { cookies } from 'next/headers';
+import { cache } from 'react';
+import { db } from './database';
+import { User as DatabaseUser, sessions, users } from './database/schema';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
     },
   },
-  getUserAttributes: (attributes) => {
+  getUserAttributes: attributes => {
     return {
       email: attributes.email,
     };
@@ -56,9 +56,9 @@ export const validateRequest = cache(
   },
 );
 
-declare module "lucia" {
+declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
-    DatabaseUserAttributes: Omit<DatabaseUser, "id">;
+    DatabaseUserAttributes: Omit<DatabaseUser, 'id'>;
   }
 }

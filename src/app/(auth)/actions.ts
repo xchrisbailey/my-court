@@ -1,14 +1,14 @@
-"use server";
+'use server';
 
-import { lucia, validateRequest } from "@/lib/auth";
-import { db } from "@/lib/database";
-import { users } from "@/lib/database/schema";
-import { ActionResult } from "@/lib/Form";
-import { hash, verify } from "@node-rs/argon2";
-import { eq } from "drizzle-orm";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { z } from "zod";
+import { lucia, validateRequest } from '@/lib/auth';
+import { db } from '@/lib/database';
+import { users } from '@/lib/database/schema';
+import { ActionResult } from '@/lib/Form';
+import { hash, verify } from '@node-rs/argon2';
+import { eq } from 'drizzle-orm';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 export type ActionState = {
   error?: string;
@@ -24,7 +24,7 @@ const signUpSchema = z.object({
   email: z.string().email().min(2),
   password: z
     .string()
-    .min(6, { message: "password must be at least 6 characters" }),
+    .min(6, { message: 'password must be at least 6 characters' }),
 });
 
 export async function signup(prevState: ActionState, formData: FormData) {
@@ -35,7 +35,7 @@ export async function signup(prevState: ActionState, formData: FormData) {
   if (!userData.success) {
     return {
       errors: userData.error.flatten().fieldErrors,
-      error: "invalid email or password",
+      error: 'invalid email or password',
     };
   }
 
@@ -64,9 +64,9 @@ export async function signup(prevState: ActionState, formData: FormData) {
     );
   } catch (err) {
     if (err instanceof Error) {
-      if (err.message.includes("user_email_unique")) {
+      if (err.message.includes('user_email_unique')) {
         return {
-          error: "Email already in use",
+          error: 'Email already in use',
         };
       } else {
         return {
@@ -76,18 +76,18 @@ export async function signup(prevState: ActionState, formData: FormData) {
     }
 
     return {
-      error: "An unknown error has occured: " + err,
+      error: 'An unknown error has occured: ' + err,
     };
   }
 
-  return redirect("/");
+  return redirect('/');
 }
 
 export async function logout(): Promise<ActionResult> {
   const { session } = await validateRequest();
   if (!session) {
     return {
-      error: "Unauthorized",
+      error: 'Unauthorized',
     };
   }
 
@@ -99,7 +99,7 @@ export async function logout(): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect("/login");
+  return redirect('/login');
 }
 
 export async function login(_: any, formData: FormData): Promise<ActionResult> {
@@ -109,7 +109,7 @@ export async function login(_: any, formData: FormData): Promise<ActionResult> {
 
   if (!userData.success) {
     return {
-      error: "invalid email or password",
+      error: 'invalid email or password',
     };
   }
 
@@ -118,7 +118,7 @@ export async function login(_: any, formData: FormData): Promise<ActionResult> {
   });
   if (!existingUser) {
     return {
-      error: "Incorrect username or password",
+      error: 'Incorrect username or password',
     };
   }
 
@@ -134,7 +134,7 @@ export async function login(_: any, formData: FormData): Promise<ActionResult> {
   );
   if (!validPassword) {
     return {
-      error: "Incorrect username or password",
+      error: 'Incorrect username or password',
     };
   }
 
@@ -145,5 +145,5 @@ export async function login(_: any, formData: FormData): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect("/");
+  return redirect('/');
 }

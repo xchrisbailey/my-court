@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useActionState } from "react";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ActionState, login, signup } from "./actions";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useActionState } from 'react';
+import { ActionState, login, signup } from './actions';
 
 type Props = {
-  page: "login" | "signup";
+  page: 'login' | 'signup';
 };
 
 export function AuthForm({ page }: Props) {
   const [state, action, pending] = useActionState<ActionState, FormData>(
-    page === "login" ? login : signup,
+    page === 'login' ? login : signup,
     {
-      error: "",
+      error: '',
     },
   );
 
   return (
     <>
-      <form action={action} className="space-y-5 min-w-1/3">
+      <form action={action} className="min-w-1/3 space-y-5">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -51,7 +51,7 @@ export function AuthForm({ page }: Props) {
         )}
 
         <Button disabled={pending}>
-          {pending ? "loading..." : page === "login" ? "login" : "signup"}
+          {pending ? 'loading...' : page === 'login' ? 'login' : 'signup'}
         </Button>
       </form>
     </>

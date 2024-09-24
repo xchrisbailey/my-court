@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { useActionState } from "react";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ActionState, login } from "../actions";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useActionState } from 'react';
+import { ActionState, login } from '../actions';
 
 export function LoginForm() {
   const [state, action, pending] = useActionState<ActionState, FormData>(
     login,
     {
-      error: "",
+      error: '',
     },
   );
 
   return (
     <>
-      <form action={action} className="space-y-5 min-w-1/3">
+      <form action={action} className="min-w-1/3 space-y-5">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -46,7 +46,7 @@ export function LoginForm() {
           <div className="text-sm text-red-500">{state.error}</div>
         )}
 
-        <Button disabled={pending}>{pending ? "loading..." : "login"}</Button>
+        <Button disabled={pending}>{pending ? 'loading...' : 'login'}</Button>
       </form>
     </>
   );
