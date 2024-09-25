@@ -20,7 +20,7 @@ export function AuthForm({ page }: Props) {
 
   return (
     <>
-      <form action={action} className="min-w-1/3 space-y-5">
+      <form action={action} className="space-y-5 min-w-1/3">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input

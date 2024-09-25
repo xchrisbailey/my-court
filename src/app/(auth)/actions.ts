@@ -3,7 +3,6 @@
 import { lucia, validateRequest } from '@/lib/auth';
 import { db } from '@/lib/database';
 import { users } from '@/lib/database/schema';
-import { ActionResult } from '@/lib/Form';
 import { hash, verify } from '@node-rs/argon2';
 import { eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
@@ -83,7 +82,7 @@ export async function signup(prevState: ActionState, formData: FormData) {
   return redirect('/');
 }
 
-export async function logout(): Promise<ActionResult> {
+export async function logout(): Promise<ActionState> {
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -99,10 +98,13 @@ export async function logout(): Promise<ActionResult> {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect('/login');
+
+  return {
+    success: 'logged out successfully',
+  };
 }
 
-export async function login(_: any, formData: FormData): Promise<ActionResult> {
+export async function login(_: any, formData: FormData): Promise<ActionState> {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
