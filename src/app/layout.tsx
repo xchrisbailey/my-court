@@ -1,4 +1,5 @@
 import { validateRequest } from '@/lib/auth';
+import { SessionProvider } from '@/lib/auth/context';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
@@ -24,38 +25,40 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { user } = await validateRequest();
+  const session = await validateRequest();
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div className="flex flex-col min-h-screen">
-          <Header user={user} />
-          <div className="flex flex-1">
-            <aside className="hidden p-4 space-y-4 w-64 border-r lg:block">
-              <nav className="space-y-2">
-                <Link
-                  href="/"
-                  className="block py-2 px-4 rounded-md hover:bg-accent"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/about"
-                  className="block py-2 px-4 rounded-md hover:bg-accent"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/contact"
-                  className="block py-2 px-4 rounded-md hover:bg-accent"
-                >
-                  Contact
-                </Link>
-              </nav>
-            </aside>
-            <main className="flex-1 p-4">{children}</main>
+        <SessionProvider value={session}>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <div className="flex flex-1">
+              <aside className="hidden p-4 space-y-4 w-64 border-r lg:block">
+                <nav className="space-y-2">
+                  <Link
+                    href="/"
+                    className="block py-2 px-4 rounded-md hover:bg-accent"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="block py-2 px-4 rounded-md hover:bg-accent"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="block py-2 px-4 rounded-md hover:bg-accent"
+                  >
+                    Contact
+                  </Link>
+                </nav>
+              </aside>
+              <main className="flex-1 p-4">{children}</main>
+            </div>
           </div>
-        </div>
+        </SessionProvider>
       </body>
     </html>
   );

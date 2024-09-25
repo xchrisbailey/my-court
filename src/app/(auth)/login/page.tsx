@@ -1,10 +1,10 @@
-import { validateRequest } from '@/lib/auth';
+import { useSession } from '@/lib/auth/context';
 import { redirect } from 'next/navigation';
 import { AuthForm } from '../form';
 
 export default async function SignInPage() {
-  const { user } = await validateRequest();
-  if (user) {
+  const session = useSession();
+  if (session.user) {
     return redirect('/');
   }
 

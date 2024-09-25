@@ -10,16 +10,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { User } from 'lucia';
+import { useSession } from '@/lib/auth/context';
 import { LogIn, Menu, User as UserIcon, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { logout } from './(auth)/actions';
 
-type Props = {
-  user: User | null;
-};
-
-export default function Header({ user }: Props) {
+export default function Header() {
+  const session = useSession();
   return (
     <>
       <header className="border-b">
@@ -48,7 +45,7 @@ export default function Header({ user }: Props) {
             <h1 className="text-2xl font-bold">my court</h1>
           </div>
           <div>
-            {user ? (
+            {session.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
