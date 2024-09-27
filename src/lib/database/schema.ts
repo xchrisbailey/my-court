@@ -139,9 +139,14 @@ export const brands = pgTable('brands', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => createId()),
-  name: text('string').notNull(),
+  name: text('name').notNull(),
+  about: text('about').notNull(),
+  logoLink: text('logoLink').notNull(),
   createdAt: timestamp('createdAt').defaultNow(),
 });
+
+export type Brand = typeof brands.$inferSelect;
+export type NewBrand = typeof brands.$inferInsert;
 
 export const brandsRelations = relations(brands, ({ many }) => ({
   strings: many(strings),

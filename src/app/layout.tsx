@@ -2,9 +2,9 @@ import { validateRequest } from '@/lib/auth';
 import { SessionProvider } from '@/lib/auth/context';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import Link from 'next/link';
 import './globals.css';
 import Header from './header';
+import { NavigationLinks } from './navigation';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -33,27 +33,8 @@ export default async function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header />
             <div className="flex flex-1">
-              <aside className="hidden p-4 space-y-4 w-64 border-r lg:block">
-                <nav className="space-y-2">
-                  <Link
-                    href="/"
-                    className="block py-2 px-4 rounded-md hover:bg-accent"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href="/about"
-                    className="block py-2 px-4 rounded-md hover:bg-accent"
-                  >
-                    About
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="block py-2 px-4 rounded-md hover:bg-accent"
-                  >
-                    Contact
-                  </Link>
-                </nav>
+              <aside className="hidden w-64 lg:block">
+                <NavigationLinks />
               </aside>
               <main className="flex-1 p-4">{children}</main>
             </div>

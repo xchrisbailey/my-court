@@ -14,6 +14,7 @@ import { useSession } from '@/lib/auth/context';
 import { LogIn, Menu, User as UserIcon, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { logout } from './(auth)/actions';
+import { NavigationLinks } from './navigation';
 
 export default function Header() {
   const session = useSession();
@@ -29,20 +30,10 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-                <nav className="flex flex-col mt-8 space-y-4">
-                  <Link href="/" className="text-lg font-medium">
-                    Home
-                  </Link>
-                  <Link href="/about" className="text-lg font-medium">
-                    About
-                  </Link>
-                  <Link href="/contact" className="text-lg font-medium">
-                    Contact
-                  </Link>
-                </nav>
+                <NavigationLinks />
               </SheetContent>
             </Sheet>
-            <h1 className="text-2xl font-bold">my court</h1>
+            <div className="text-2xl font-bold">my court</div>
           </div>
           <div>
             {session.user ? (

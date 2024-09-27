@@ -3,20 +3,16 @@
 import { lucia, validateRequest } from '@/lib/auth';
 import { db } from '@/lib/database';
 import { users } from '@/lib/database/schema';
+import { ActionState } from '@/shared/types';
 import { hash, verify } from '@node-rs/argon2';
 import { eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-export type ActionState = {
-  error?: string;
-  errors?: {
-    email?: string[] | undefined;
-    password?: string[] | undefined;
-  };
-  success?: string;
-  [key: string]: any;
+export type AuthActionStateErrors = {
+  email?: string[] | undefined;
+  password?: string[] | undefined;
 };
 
 const signUpSchema = z.object({
@@ -26,7 +22,10 @@ const signUpSchema = z.object({
     .min(6, { message: 'password must be at least 6 characters' }),
 });
 
-export async function signup(prevState: ActionState, formData: FormData) {
+export async function signup(
+  _: ActionState<AuthActionStateErrors>,
+  formData: FormData,
+) {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
@@ -82,7 +81,7 @@ export async function signup(prevState: ActionState, formData: FormData) {
   return redirect('/');
 }
 
-export async function logout(): Promise<ActionState> {
+export async function logout(): Promise<ActionState<AuthActionStateErrors>> {
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -104,7 +103,10 @@ export async function logout(): Promise<ActionState> {
   };
 }
 
-export async function login(_: any, formData: FormData): Promise<ActionState> {
+export async function login(
+  _: any,
+  formData: FormData,
+): Promise<ActionState<AuthActionStateErrors>> {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
