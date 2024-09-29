@@ -3,21 +3,20 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ActionState } from '@/shared/types';
 import { useActionState } from 'react';
-import { AuthActionStateErrors, login, signup } from './actions';
+import { AuthActionState, login, signup } from './actions';
 
 type Props = {
   page: 'login' | 'signup';
 };
 
 export function AuthForm({ page }: Props) {
-  const [state, action, pending] = useActionState<
-    ActionState<AuthActionStateErrors>,
-    FormData
-  >(page === 'login' ? login : signup, {
-    error: '',
-  });
+  const [state, action, pending] = useActionState<AuthActionState, FormData>(
+    page === 'login' ? login : signup,
+    {
+      error: '',
+    },
+  );
 
   return (
     <>

@@ -10,9 +10,6 @@ export const users = pgTable('user', {
   password: text('password').notNull(),
 });
 
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
-
 export const sessions = pgTable('session', {
   id: text('id').primaryKey(),
   userId: text('user_id')
@@ -144,9 +141,6 @@ export const brands = pgTable('brands', {
   logoLink: text('logoLink').notNull(),
   createdAt: timestamp('createdAt').defaultNow(),
 });
-
-export type Brand = typeof brands.$inferSelect;
-export type NewBrand = typeof brands.$inferInsert;
 
 export const brandsRelations = relations(brands, ({ many }) => ({
   strings: many(strings),

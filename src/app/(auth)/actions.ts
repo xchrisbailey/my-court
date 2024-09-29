@@ -10,10 +10,10 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-export type AuthActionStateErrors = {
+export type AuthActionState = ActionState<{
   email?: string[] | undefined;
   password?: string[] | undefined;
-};
+}>;
 
 const signUpSchema = z.object({
   email: z.string().email().min(2),
@@ -22,10 +22,7 @@ const signUpSchema = z.object({
     .min(6, { message: 'password must be at least 6 characters' }),
 });
 
-export async function signup(
-  _: ActionState<AuthActionStateErrors>,
-  formData: FormData,
-) {
+export async function signup(_: AuthActionState, formData: FormData) {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
@@ -81,7 +78,7 @@ export async function signup(
   return redirect('/');
 }
 
-export async function logout(): Promise<ActionState<AuthActionStateErrors>> {
+export async function logout(): Promise<AuthActionState> {
   const { session } = await validateRequest();
   if (!session) {
     return {
@@ -104,9 +101,9 @@ export async function logout(): Promise<ActionState<AuthActionStateErrors>> {
 }
 
 export async function login(
-  _: any,
+  _: AuthActionState,
   formData: FormData,
-): Promise<ActionState<AuthActionStateErrors>> {
+): Promise<AuthActionState> {
   const userData = signUpSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );

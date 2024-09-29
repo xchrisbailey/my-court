@@ -1,9 +1,10 @@
+import { type User as DatabaseUser } from '@/shared/types';
 import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
-import { Lucia, Session, User } from 'lucia';
+import { Lucia, type Session, type User } from 'lucia';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 import { db } from '../database';
-import { User as DatabaseUser, sessions, users } from '../database/schema';
+import { sessions, users } from '../database/schema';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessions, users);
 

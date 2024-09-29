@@ -2,8 +2,8 @@
 
 import { validateRequest } from '@/lib/auth';
 import { db } from '@/lib/database';
-import { Brand, brands } from '@/lib/database/schema';
-import { ActionState } from '@/shared/types';
+import { brands } from '@/lib/database/schema';
+import { ActionState, Brand } from '@/shared/types';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -24,13 +24,13 @@ export async function addBrand(_: BrandActionState, formData: FormData) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
-  const brandData = newBrandSchema.safeParse(
+  const parsedForm = newBrandSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
-  if (!brandData.success) {
+  if (!parsedForm.success) {
     return {
-      errors: brandData.error.flatten().fieldErrors,
+      errors: parsedForm.error.flatten().fieldErrors,
       error: 'invalid brand data',
     };
   }
@@ -38,9 +38,9 @@ export async function addBrand(_: BrandActionState, formData: FormData) {
   let newBrand: Brand[];
 
   try {
-    newBrand = await db.insert(brands).values(brandData.data).returning();
+    newBrand = await db.insert(brands).values(parsedForm.data).returning();
     if (!newBrand[0])
-      throw new Error(`couldnt create brand ${brandData.data.name}`);
+      throw new Error(`couldnt create brand ${parsedForm.data.name}`);
   } catch (err) {
     if (err instanceof Error) {
       return {
@@ -72,29 +72,29 @@ export async function editBrand(_: BrandActionState, formData: FormData) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
-  const brandData = editBrandSchema.safeParse(
+  const parsedForm = editBrandSchema.safeParse(
     Object.fromEntries(formData.entries()),
   );
 
-  if (!brandData.success) {
+  if (!parsedForm.success) {
     return {
-      errors: brandData.error.flatten().fieldErrors,
+      errors: parsedForm.error.flatten().fieldErrors,
       error: 'invalid brand data',
     };
   }
 
-  const { brandId, ...updatedBrandData } = brandData.data;
+  const { brandId, ...updatedBrandData } = parsedForm.data;
 
-  let newBrand: Brand[];
+  let updatedBrand: Brand[];
 
   try {
-    newBrand = await db
+    updatedBrand = await db
       .update(brands)
       .set(updatedBrandData)
       .where(eq(brands.id, brandId))
       .returning();
-    if (!newBrand[0])
-      throw new Error(`couldnt edit brand: ${brandData.data.name}`);
+    if (!updatedBrand[0])
+      throw new Error(`couldnt edit brand: ${parsedForm.data.name}`);
   } catch (err) {
     if (err instanceof Error) {
       return {
@@ -108,7 +108,7 @@ export async function editBrand(_: BrandActionState, formData: FormData) {
     };
   }
 
-  return redirect(`/brands/${newBrand[0].id}`);
+  return redirect(`/brands/${updatedBrand[0].id}`);
 }
 
 export async function deleteBrand(id: string) {

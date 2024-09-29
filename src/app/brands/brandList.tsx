@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Brand } from '@/lib/database/schema';
+import { Brand } from '@/shared/types';
 import Link from 'next/link';
 import { use } from 'react';
 
