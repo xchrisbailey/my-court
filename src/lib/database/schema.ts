@@ -94,9 +94,15 @@ export const gearSets = pgTable('gearSet', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => createId()),
-  userId: text('userId').references(() => users.id, { onDelete: 'cascade' }),
-  racketId: text('racketId').references(() => rackets.id),
-  stringId: text('stringId').references(() => strings.id),
+  userId: text('userId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  racketId: text('racketId')
+    .references(() => rackets.id)
+    .notNull(),
+  stringId: text('stringId')
+    .references(() => strings.id)
+    .notNull(),
   stringTensionMains: integer('stringTensionMains').notNull(),
   stringTensionCrosses: integer('stringTensionCrosses').notNull(),
   createdAt: timestamp('createdAt').defaultNow(),

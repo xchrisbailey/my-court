@@ -1,13 +1,16 @@
+'use server';
+
 import {
   Brand,
   String as DBString,
+  GearSetWithRacketAndString,
   Racket,
   RacketWithBrand,
   StringWithBrand,
 } from '@/shared/types';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from '.';
-import { brands, rackets, strings } from './schema';
+import { brands, gearSets, rackets, strings } from './schema';
 
 export async function getBrand(id: string): Promise<Brand | undefined> {
   return await db.query.brands.findFirst({ where: eq(brands.id, id) });
@@ -65,4 +68,25 @@ export async function getStringWithBrand(
     where: eq(strings.id, id),
     with: { brand: true },
   })) as StringWithBrand;
+}
+
+export async function getGearSetWithItems(
+  id: string,
+  uid: string,
+): Promise<GearSetWithRacketAndString | undefined> {
+  return (await db.query.gearSets.findFirst({
+    where: and(eq(gearSets.id, id), eq(gearSets.userId, uid)),
+    with: {
+      strings: {
+        with: {
+          brand: true,
+        },
+      },
+      racket: {
+        with: {
+          brand: true,
+        },
+      },
+    },
+  })) as GearSetWithRacketAndString;
 }

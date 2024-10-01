@@ -9,6 +9,9 @@ const config = [
   ...fixupConfigRules(flatCompat.extends('next/core-web-vitals')),
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
+  {
+    ignores: ['src/components/ui/*'],
+  },
 ];
 
 export default config;
