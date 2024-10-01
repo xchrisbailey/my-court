@@ -1,4 +1,4 @@
-import GearList from '@/components/racketList';
+import GearList from '@/components/GearList';
 import { getStringsWithBrand } from '@/lib/database/queries';
 import { Suspense } from 'react';
 

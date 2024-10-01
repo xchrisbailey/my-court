@@ -1,5 +1,5 @@
 import { deleteString } from '@/app/(protected)/strings/actions';
-import StringSpecCard from '@/components/stringSpecCard';
+import StringSpecCard from '@/components/StringSpecCard';
 import { Button } from '@/components/ui/button';
 import { validateRequest } from '@/lib/auth';
 import { getStringWithBrand } from '@/lib/database/queries';

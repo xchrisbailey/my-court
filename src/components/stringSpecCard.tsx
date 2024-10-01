@@ -1,7 +1,6 @@
 type Props = {
   gauge: string;
   composition: string;
-  tensionRange: number;
 };
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
