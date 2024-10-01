@@ -97,7 +97,8 @@ export const gearSets = pgTable('gearSet', {
   userId: text('userId').references(() => users.id, { onDelete: 'cascade' }),
   racketId: text('racketId').references(() => rackets.id),
   stringId: text('stringId').references(() => strings.id),
-  stringTension: integer('stringTension').notNull(),
+  stringTensionMains: integer('stringTensionMains').notNull(),
+  stringTensionCrosses: integer('stringTensionCrosses').notNull(),
   createdAt: timestamp('createdAt').defaultNow(),
 });
 
