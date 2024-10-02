@@ -1,5 +1,5 @@
 import { deleteString } from '@/app/(protected)/strings/actions';
-import StringSpecCard from '@/components/StringSpecCard';
+import StringSpecCard from '@/components/string-spec-card';
 import { Button } from '@/components/ui/button';
 import { validateRequest } from '@/lib/auth';
 import { getStringWithBrand } from '@/lib/database/queries';
@@ -41,11 +41,7 @@ export default async function stringPage({
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <StringSpecCard
-          gauge={string.gauge}
-          composition={string.composition}
-          tensionRange={0}
-        />
+        <StringSpecCard gauge={string.gauge} composition={string.composition} />
       </div>
     </>
   );

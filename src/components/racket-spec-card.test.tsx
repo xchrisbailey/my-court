@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import RacketSpecCard from './racketSpecCard';
+import RacketSpecCard from './racket-spec-card';
 
 describe('RacketSpecCard', () => {
   const props = {

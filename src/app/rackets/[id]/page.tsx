@@ -1,5 +1,5 @@
 import { deleteRacket } from '@/app/(protected)/rackets/actions';
-import RacketSpecCard from '@/components/racketSpecCard';
+import RacketSpecCard from '@/components/racket-spec-card';
 import { Button } from '@/components/ui/button';
 import { validateRequest } from '@/lib/auth';
 import { getRacketWithBrand } from '@/lib/database/queries';

@@ -8,7 +8,7 @@ export function squareInchesToSquareCentimeters(squareInches: number): string {
   return squareCentimeters.toFixed(2);
 }
 
-export function gaugeToMM(gauge: string): string | Error {
+export function gaugeToMM(gauge: string): string {
   switch (gauge) {
     case '16':
       return '1.30mm';
@@ -19,6 +19,6 @@ export function gaugeToMM(gauge: string): string | Error {
     case '18':
       return '1.15mm';
     default:
-      throw new Error('invalid string gauge');
+      return 'unknown';
   }
 }

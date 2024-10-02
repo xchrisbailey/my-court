@@ -10,7 +10,7 @@ describe('gaugeToMM', () => {
   });
 
   it('should return error with invalid string gauge', () => {
-    expect(() => helpers.gaugeToMM('100')).toThrowError('invalid string gauge');
+    expect(helpers.gaugeToMM('1000')).toEqual('unknown');
   });
 });
 

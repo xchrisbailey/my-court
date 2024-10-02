@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import StringSpecCard from './StringSpecCard';
+import StringSpecCard from './string-spec-card';
 
 describe('StringSpecCard', () => {
   const props = {
