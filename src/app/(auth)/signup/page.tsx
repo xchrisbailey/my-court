@@ -1,6 +1,6 @@
+import { AuthForm } from '@/app/(auth)/_components/auth-form';
 import { validateRequest } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import { AuthForm } from '../form';
 
 export default async function SignUpPage() {
   const { user } = await validateRequest();

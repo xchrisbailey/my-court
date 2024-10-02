@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { logout } from './actions';
+import { logout } from '../actions';
 
 export function LogoutButton() {
   const router = useRouter();
