@@ -16,7 +16,7 @@ import {
   StringWithBrand,
 } from '@/shared/types';
 import { use, useActionState } from 'react';
-import { addGearSet, editGearSet, GearSetActionState } from './actions';
+import { addGearSet, editGearSet, GearSetActionState } from '../actions';
 
 type Props = {
   page: 'new' | 'edit';

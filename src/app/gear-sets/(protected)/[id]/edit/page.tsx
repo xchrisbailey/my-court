@@ -1,10 +1,10 @@
+import { GearSetForm } from '@/app/gear-sets/_components/gear-set-form';
 import { validateRequest } from '@/lib/auth';
 import {
   getGearSetWithItems,
   getRacketsWithBrand,
   getStringsWithBrand,
 } from '@/lib/database/queries';
-import { GearSetForm } from '../../form';
 
 export default async function EditGearSetPage({
   params,

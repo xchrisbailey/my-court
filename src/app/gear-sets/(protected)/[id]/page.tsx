@@ -1,7 +1,7 @@
+import { GearSetCard } from '@/app/gear-sets/_components/gear-set-card';
 import { validateRequest } from '@/lib/auth';
 import { getGearSetWithItems } from '@/lib/database/queries';
 import { notFound, redirect } from 'next/navigation';
-import { GearSetCard } from '../_components/GearSetCard';
 
 export default async function GearSetPage({
   params,

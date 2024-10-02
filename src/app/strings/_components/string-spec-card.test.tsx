@@ -1,6 +1,6 @@
+import StringSpecCard from '@/app/strings/_components/string-spec-card';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import StringSpecCard from './string-spec-card';
 
 describe('StringSpecCard', () => {
   const props = {

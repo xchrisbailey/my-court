@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/select';
 import { Brand, String } from '@/shared/types';
 import { use, useActionState } from 'react';
-import { addString, editString, StringActionState } from './actions';
+import { addString, editString, StringActionState } from '../actions';
 
 type Props = {
   page: 'new' | 'edit';

@@ -15,7 +15,7 @@ type Props = {
   stringsPromise?: Promise<StringWithBrand[]>;
 };
 
-export default function GearList({ racketsPromise, stringsPromise }: Props) {
+export function GearList({ racketsPromise, stringsPromise }: Props) {
   const rackets = racketsPromise ? use(racketsPromise) : null;
   const strings = stringsPromise ? use(stringsPromise) : null;
 

@@ -1,5 +1,5 @@
+import { RacketForm } from '@/app/rackets/_components/racket-form';
 import { getBrands, getRacket } from '@/lib/database/queries';
-import { RacketForm } from '../../form';
 
 export default async function EditRacketPage({
   params,

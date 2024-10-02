@@ -1,5 +1,5 @@
+import { StringForm } from '@/app/strings/_components/string-form';
 import { getBrands, getString } from '@/lib/database/queries';
-import { StringForm } from '../../form';
 
 export default async function EditStringPage({
   params,
