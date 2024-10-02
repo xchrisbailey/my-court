@@ -9,7 +9,7 @@ export default async function SignInPage() {
   }
 
   return (
-    <div className="mx-auto grid min-h-[calc(100dvh-80px)] w-full items-center md:w-1/3">
+    <div className="mx-auto grid min-h-[calc(100dvh-70px)] w-full items-center md:w-1/3">
       <div>
         <h1>Login</h1>
         <AuthForm page="login" />
