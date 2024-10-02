@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useActionState } from 'react';
-import { AuthActionState, login, signup } from './actions';
+import { AuthActionState, login, signup } from '../actions';
 
 type Props = {
   page: 'login' | 'signup';

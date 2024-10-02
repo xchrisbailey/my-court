@@ -7,7 +7,7 @@ export default async function SignUpPage() {
   if (user) return redirect('/');
 
   return (
-    <div className="mx-auto grid min-h-[calc(100dvh-80px)] w-full items-center md:w-1/3">
+    <div className="grid items-center mx-auto w-full md:w-1/3">
       <div>
         <h1>Sign Up</h1>
         <AuthForm page="signup" />
