@@ -13,6 +13,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useSession } from '@/lib/auth/context';
 import { LogIn, Menu, User as UserIcon, UserPlus } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { logout } from './(auth)/actions';
 import { NavigationLinks } from './navigation';
 
@@ -48,7 +49,12 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem onClick={async () => await logout()}>
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      toast('Logged out successfully');
+                      await logout();
+                    }}
+                  >
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>

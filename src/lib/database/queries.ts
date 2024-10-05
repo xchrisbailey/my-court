@@ -4,13 +4,14 @@ import {
   Brand,
   String as DBString,
   GearSetWithRacketAndString,
+  MatchWithRelations,
   Racket,
   RacketWithBrand,
   StringWithBrand,
 } from '@/shared/types';
 import { and, eq } from 'drizzle-orm';
 import { db } from '.';
-import { brands, gearSets, rackets, strings } from './schema';
+import { brands, gearSets, matches, rackets, strings } from './schema';
 
 export async function getBrand(id: string): Promise<Brand | undefined> {
   return await db.query.brands.findFirst({ where: eq(brands.id, id) });
@@ -89,4 +90,56 @@ export async function getGearSetWithItems(
       },
     },
   })) as GearSetWithRacketAndString;
+}
+
+export async function getGearSetsWithItems(
+  uid: string,
+): Promise<GearSetWithRacketAndString[]> {
+  return (await db.query.gearSets.findMany({
+    where: eq(gearSets.userId, uid),
+    with: {
+      strings: {
+        with: {
+          brand: true,
+        },
+      },
+      racket: {
+        with: {
+          brand: true,
+        },
+      },
+    },
+  })) as GearSetWithRacketAndString[];
+}
+
+export async function getMatchWithRelations(
+  id: string,
+  uid: string,
+): Promise<MatchWithRelations | undefined> {
+  return (await db.query.matches.findFirst({
+    where: and(eq(matches.id, id), eq(matches.userId, uid)),
+    with: {
+      user: true,
+      gear: {
+        with: {
+          racket: {
+            with: {
+              brand: true,
+            },
+          },
+          strings: {
+            with: {
+              brand: true,
+            },
+          },
+        },
+      },
+    },
+  })) as MatchWithRelations;
+}
+
+export async function getMatches(uid: string) {
+  return await db.query.matches.findMany({
+    where: eq(matches.userId, uid),
+  });
 }

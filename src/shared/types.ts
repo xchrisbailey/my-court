@@ -45,6 +45,10 @@ export type NewString = typeof strings.$inferInsert;
 
 // match types
 export type Match = typeof matches.$inferSelect;
+export type MatchWithRelations = Match & {
+  gear: GearSetWithRacketAndString;
+  user: User;
+};
 export type NewMatch = typeof matches.$inferInsert;
 
 // practice type

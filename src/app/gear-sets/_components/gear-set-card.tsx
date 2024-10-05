@@ -28,12 +28,14 @@ export function GearSetCard({ gear, display }: TennisGearProps) {
           <span className="flex gap-2 justify-end items-center">
             <Button asChild variant="secondary" size="icon" className="w-7 h-7">
               <Link href={`/gearSets/${gear.id}/edit`}>
+                <span className="sr-only">edit</span>
                 <Pencil className="w-4 h-4" />
               </Link>
             </Button>
             <form action={deleteGearSet}>
               <input type="hidden" value={gear.id} name="gearSetId" />
               <Button variant="destructive" size="icon" className="w-7 h-7">
+                <span className="sr-only">delete</span>
                 <Trash className="w-4 h-4" />
               </Button>
             </form>

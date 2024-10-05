@@ -1,4 +1,4 @@
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 import { validateRequest } from '@/lib/auth';
 import { SessionProvider } from '@/lib/auth/context';
 import type { Metadata } from 'next';
@@ -40,7 +40,7 @@ export default async function RootLayout({
               <main className="flex-1 p-4">{children}</main>
             </div>
           </div>
-          <Toaster />
+          <Toaster position="top-center" />
         </SessionProvider>
       </body>
     </html>

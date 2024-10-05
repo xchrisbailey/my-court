@@ -1,5 +1,6 @@
 'use client';
 
+import { FieldError } from '@/components/field-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -139,8 +140,4 @@ export function StringForm({
       </form>
     </>
   );
-}
-
-function FieldError({ msg }: { msg: string }) {
-  return <span className="text-sm text-red-500">{msg}</span>;
 }
