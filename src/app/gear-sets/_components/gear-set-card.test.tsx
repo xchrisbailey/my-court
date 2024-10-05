@@ -6,6 +6,10 @@ import { GearSetCard } from './gear-set-card';
 
 const mockGear: GearSetWithRacketAndString = {
   id: '1',
+  createdAt: new Date(),
+  userId: 'user1',
+  racketId: 'racket1',
+  stringId: 'string1',
   racket: {
     id: 'racket1',
     model: 'Pro Staff 97',
