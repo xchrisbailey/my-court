@@ -32,7 +32,7 @@ export function GearList({ racketsPromise, stringsPromise }: Props) {
   );
 }
 
-function RacketListCard({ racket }: { racket: RacketWithBrand }) {
+export function RacketListCard({ racket }: { racket: RacketWithBrand }) {
   return (
     <Link
       href={`/rackets/${racket.id}`}
@@ -59,7 +59,7 @@ function RacketListCard({ racket }: { racket: RacketWithBrand }) {
   );
 }
 
-function StringListCard({ string }: { string: StringWithBrand }) {
+export function StringListCard({ string }: { string: StringWithBrand }) {
   return (
     <Link
       href={`/strings/${string.id}`}
@@ -86,7 +86,7 @@ function StringListCard({ string }: { string: StringWithBrand }) {
   );
 }
 
-function RenderGearItems(gear: JSX.Element[]) {
+export function RenderGearItems(gear: JSX.Element[]) {
   return React.Children.map(gear, (child, index) => {
     return React.cloneElement(child, { key: index });
   });
