@@ -18,14 +18,13 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { GearSetWithRacketAndString, Match } from '@/shared/types';
-import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { use, useActionState, useState } from 'react';
+import 'react-quill-new/dist/quill.snow.css';
 import { addMatch, editMatch, MatchActionState } from '../actions';
-import { EditorMenuBar } from './editor-menu-bar';
 import { SetScoreCard } from './set-score-card';
 
 const states = [
@@ -81,6 +80,8 @@ const states = [
   { name: 'Wyoming', abbreviation: 'WY' },
 ];
 
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
+
 type Props = {
   page: 'new' | 'edit';
   targetMatchPromise?: Promise<Match | undefined>;
@@ -104,21 +105,6 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
       error: '',
     },
   );
-
-  const editor = useEditor({
-    immediatelyRender: false,
-    extensions: [StarterKit],
-    content: editorHtmlContent,
-    onUpdate: ({ editor }) => {
-      const htmlContent = editor.getHTML();
-      setEditorHtmlContent(htmlContent);
-    },
-    editorProps: {
-      attributes: {
-        class: 'flex-grow p-2 prose h-[20ch] overflow-scroll w-full',
-      },
-    },
-  });
 
   return (
     <div className="mx-auto w-full max-w-xl">
@@ -238,20 +224,16 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
           />
         </div>
 
-        {editor && (
-          <div className="space-y-2">
-            <Label htmlFor="notes">Notes</Label>
-            <div className="flex flex-col p-2 w-full rounded-md border min-h-[20ch]">
-              <EditorMenuBar editor={editor} />
-              <EditorContent
-                editor={editor}
-                className="flex flex-col flex-grow"
-                defaultValue={page === 'edit' ? (match?.notes ?? '') : ''}
-              />
-            </div>
-            <input type="hidden" name="notes" value={editorHtmlContent} />
+        <div className="space-y-2">
+          <Label htmlFor="notes">Notes</Label>
+          <div className="flex flex-col p-2 w-full rounded-md border min-h-[20ch]">
+            <ReactQuill
+              value={editorHtmlContent}
+              onChange={setEditorHtmlContent}
+            />
           </div>
-        )}
+          <input type="hidden" name="notes" value={editorHtmlContent} />
+        </div>
 
         {['first', 'second', 'third'].map((set, index) => (
           <div key={set} className="space-y-4">

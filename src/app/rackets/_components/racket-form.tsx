@@ -75,7 +75,7 @@ export function RacketForm({
               name="brandId"
               defaultValue={page === 'edit' ? racket?.brandId : ''}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full" aria-label="Select Brand">
                 <SelectValue placeholder="Select Brand" />
               </SelectTrigger>
               <SelectContent>
