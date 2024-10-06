@@ -151,9 +151,11 @@ describe('MatchForm', () => {
   beforeEach(() => {
     (useActionState as Mock).mockImplementation(mockUseActionState);
   });
+
   afterEach(() => {
     vi.clearAllMocks();
   });
+
   it('renders the form for adding a new match', async () => {
     mockUseActionState.mockReturnValue([{ errors: {} }, vi.fn(), false]);
     render(<MatchForm page="new" gearPromise={gearPromise} />);

@@ -69,7 +69,7 @@ export function StringForm({
                 name="gauge"
                 defaultValue={page === 'edit' ? stringData?.gauge : ''}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full" aria-label="Select Gauge">
                   <SelectValue placeholder="Select Gauge" />
                 </SelectTrigger>
                 <SelectContent>
@@ -91,7 +91,10 @@ export function StringForm({
                 name="composition"
                 defaultValue={page === 'edit' ? stringData?.composition : ''}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger
+                  className="w-full"
+                  aria-label="Select String Material"
+                >
                   <SelectValue placeholder="Select String Material" />
                 </SelectTrigger>
                 <SelectContent>
@@ -114,7 +117,7 @@ export function StringForm({
               name="brandId"
               defaultValue={page === 'edit' ? stringData?.brandId : ''}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full" aria-label="Select Brand">
                 <SelectValue placeholder="Select Brand" />
               </SelectTrigger>
               <SelectContent>

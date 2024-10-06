@@ -71,6 +71,10 @@ describe('RacketForm', () => {
     (useActionState as Mock).mockImplementation(mockUseActionState);
   });
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders the form for adding a new racket', async () => {
     mockUseActionState.mockReturnValue([{ errors: {} }, vi.fn(), false]);
 
