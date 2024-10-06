@@ -15,7 +15,7 @@ type ScoreDisplayProps = {
   opponentTiebreak?: number | null | undefined;
 };
 
-const ScoreDisplay = ({
+export const ScoreDisplay = ({
   selfScore,
   opponentScore,
   setNumber,
