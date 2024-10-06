@@ -99,7 +99,7 @@ export function RacketForm({
               name="headSize"
               defaultValue={page === 'edit' ? racket?.headSize.toString() : ''}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full" aria-label="Select Head Size">
                 <SelectValue
                   placeholder="Select Head Size"
                   defaultValue={page === 'edit' ? racket?.headSize : ''}
@@ -124,7 +124,7 @@ export function RacketForm({
               name="stringPattern"
               defaultValue={page === 'edit' ? racket?.stringPattern : ''}
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full" aria-label="String Pattern">
                 <SelectValue
                   placeholder="Select String Pattern"
                   defaultValue={page === 'edit' ? racket?.stringPattern : ''}

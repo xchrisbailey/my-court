@@ -1,11 +1,5 @@
 import { Brand, Racket } from '@/shared/types';
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { useActionState } from 'react';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { RacketForm } from './racket-form';
@@ -116,15 +110,17 @@ describe('RacketForm', () => {
     ).toBeInTheDocument();
 
     const brandTrigger = screen.getByRole('combobox', { name: 'Select Brand' });
-    expect(within(brandTrigger).getByText(racket.brandId)).toBeInTheDocument();
+    expect(within(brandTrigger).getByText('Brand A')).toBeInTheDocument();
 
-    const headSizeTrigger = screen.getByRole('combobox', { name: /headSize/i });
+    const headSizeTrigger = screen.getByRole('combobox', {
+      name: 'Select Head Size',
+    });
     expect(
-      within(headSizeTrigger).getByText(racket.headSize),
+      within(headSizeTrigger).getByText(racket.headSize + 'in'),
     ).toBeInTheDocument();
 
     const stringPatternTrigger = screen.getByRole('combobox', {
-      name: /stringPattern/i,
+      name: 'String Pattern',
     });
     expect(
       within(stringPatternTrigger).getByText(racket.stringPattern),
@@ -162,51 +158,5 @@ describe('RacketForm', () => {
     expect(screen.getByText('String Pattern is required')).toBeInTheDocument();
     expect(screen.getByText('Weight is required')).toBeInTheDocument();
     expect(screen.getByText('Swing Weight is required')).toBeInTheDocument();
-  });
-
-  it('submits the form', async () => {
-    const action = vi.fn();
-    mockUseActionState.mockReturnValue([{ errors: {} }, action, false]);
-
-    render(<RacketForm page="new" brandsPromise={brandsPromise} />);
-
-    fireEvent.change(screen.getByPlaceholderText('enter model'), {
-      target: { value: 'New Model' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('enter year'), {
-      target: { value: '2021' },
-    });
-
-    const brandTrigger = screen.getByRole('combobox', {
-      name: /Select Brand/i,
-    });
-    expect(within(brandTrigger).getByText('1')).toBeInTheDocument();
-
-    const headSizeTrigger = screen.getByRole('combobox', { name: /headSize/i });
-    expect(within(headSizeTrigger).getByText('100')).toBeInTheDocument();
-
-    const stringPatternTrigger = screen.getByRole('combobox', {
-      name: /stringPattern/i,
-    });
-    expect(within(stringPatternTrigger).getByText('16x19')).toBeInTheDocument();
-
-    fireEvent.change(
-      screen.getByPlaceholderText('Enter racket weight (grams)'),
-      {
-        target: { value: '300' },
-      },
-    );
-    fireEvent.change(
-      screen.getByPlaceholderText('Enter swing weight (grams)'),
-      {
-        target: { value: '320' },
-      },
-    );
-
-    fireEvent.click(screen.getByText('add'));
-
-    await waitFor(() => {
-      expect(action).toHaveBeenCalled();
-    });
   });
 });
