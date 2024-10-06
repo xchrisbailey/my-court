@@ -135,7 +135,7 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
           <div className="space-y-2">
             <Label htmlFor="state">State</Label>
             <Select name="state" value={mState} onValueChange={setMState}>
-              <SelectTrigger>
+              <SelectTrigger aria-label="Select a state">
                 <SelectValue placeholder="Select a state" />
               </SelectTrigger>
               <SelectContent>
@@ -157,7 +157,7 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
             name="organization"
             defaultValue={page === 'edit' ? match?.organization : ''}
           >
-            <SelectTrigger>
+            <SelectTrigger aria-label="Select a organization">
               <SelectValue placeholder="Select a organization" />
             </SelectTrigger>
             <SelectContent>
@@ -172,7 +172,7 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
             name="gearId"
             defaultValue={page === 'edit' ? (match?.gearId ?? '') : ''}
           >
-            <SelectTrigger>
+            <SelectTrigger aria-label="Select Your Gear">
               <SelectValue placeholder="Select Your Gear" />
             </SelectTrigger>
             <SelectContent>
