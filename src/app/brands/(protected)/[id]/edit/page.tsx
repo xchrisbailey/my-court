@@ -1,5 +1,5 @@
+import { BrandForm } from '@/app/brands/_components/form';
 import { getBrand } from '@/lib/database/queries';
-import { BrandForm } from '../../form';
 
 export default async function UpdateBrandPage({
   params,

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Brand } from '@/shared/types';
 import { use, useActionState } from 'react';
-import { addBrand, BrandActionState, editBrand } from './actions';
+import { addBrand, BrandActionState, editBrand } from '../(protected)/actions';
 
 type Props = {
   page: 'new' | 'edit';
