@@ -47,6 +47,15 @@ vi.mock('next/navigation', () => ({
 
 describe('MatchViewCard', () => {
   const mockMatch: MatchWithRelations = {
+    user: {
+      id: 'user-1',
+      email: 'user1@example.com',
+      password: 'password123',
+    },
+    id: 'match-1',
+    gearId: 'gear-1',
+    userId: 'user-1',
+    createdAt: new Date('2023-10-01'),
     firstSetSelf: 6,
     firstSetOpponent: 4,
     firstSetTieBreakSelf: 7,
