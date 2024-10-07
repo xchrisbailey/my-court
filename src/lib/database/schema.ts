@@ -134,6 +134,7 @@ export const practices = pgTable('practice', {
   state: text('state').notNull(),
   notes: text('notes'),
   userId: text('userId').references(() => users.id, { onDelete: 'cascade' }),
+  gearId: text('gearId').references(() => gearSets.id),
   createdAt: timestamp('createdAt').defaultNow(),
 });
 
@@ -141,6 +142,10 @@ export const practicesRelations = relations(practices, ({ one }) => ({
   user: one(users, {
     fields: [practices.userId],
     references: [users.id],
+  }),
+  gear: one(gearSets, {
+    fields: [practices.gearId],
+    references: [gearSets.id],
   }),
 }));
 

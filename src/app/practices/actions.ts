@@ -13,6 +13,7 @@ export type PracticeActionState = ActionState<{
   city: string[] | undefined;
   state: string[] | undefined;
   notes: string[] | undefined;
+  gearId: string[] | undefined;
 }>;
 
 const newPracticeSchema = z.object({
@@ -22,6 +23,7 @@ const newPracticeSchema = z.object({
   city: z.string().min(3),
   state: z.string().min(2).max(2),
   notes: z.string().min(3),
+  gearId: z.string().cuid2(),
 });
 
 export async function addPractice(_: PracticeActionState, formData: FormData) {
@@ -39,10 +41,8 @@ export async function addPractice(_: PracticeActionState, formData: FormData) {
     };
   }
 
-  let newPractice: Practice[];
-
   try {
-    newPractice = await db
+    const newPractice = await db
       .insert(practices)
       .values({
         ...parsedForm.data,
@@ -53,6 +53,8 @@ export async function addPractice(_: PracticeActionState, formData: FormData) {
     if (!newPractice[0]) {
       throw new Error('Failed to add practice');
     }
+
+    return redirect(`/practices/${newPractice[0].id}`);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {
@@ -64,8 +66,6 @@ export async function addPractice(_: PracticeActionState, formData: FormData) {
       error: 'Failed to add practice',
     };
   }
-
-  return redirect(`/practices/${newPractice[0].id}`);
 }
 
 const editPracticeSchema = z.object({
@@ -75,6 +75,7 @@ const editPracticeSchema = z.object({
   city: z.string().min(3).optional(),
   state: z.string().min(2).max(2).optional(),
   notes: z.string().min(3).optional(),
+  gearId: z.string().cuid2().optional(),
   practiceId: z.string().cuid2(),
 });
 
