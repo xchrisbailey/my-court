@@ -91,7 +91,11 @@ type Props = {
   gearPromise: Promise<GearSetWithRacketAndString[] | undefined>;
 };
 
-export function MatchForm({ page, targetPracticePromise, gearPromise }: Props) {
+export function PracticeForm({
+  page,
+  targetPracticePromise,
+  gearPromise,
+}: Props) {
   const practice = targetPracticePromise
     ? use(targetPracticePromise)
     : undefined;
@@ -140,7 +144,7 @@ export function MatchForm({ page, targetPracticePromise, gearPromise }: Props) {
           <div className="space-y-2">
             <Label htmlFor="state">State</Label>
             <Select name="state" value={mState} onValueChange={setMState}>
-              <SelectTrigger aria-label="Select a state">
+              <SelectTrigger aria-label="Select a state" id="state">
                 <SelectValue placeholder="Select a state" />
               </SelectTrigger>
               <SelectContent>
@@ -162,7 +166,7 @@ export function MatchForm({ page, targetPracticePromise, gearPromise }: Props) {
             name="type"
             defaultValue={page === 'edit' ? practice?.type : ''}
           >
-            <SelectTrigger aria-label="Select practice type">
+            <SelectTrigger aria-label="Select practice type" id="type">
               <SelectValue placeholder="Select practice type" />
             </SelectTrigger>
             <SelectContent>
@@ -181,7 +185,7 @@ export function MatchForm({ page, targetPracticePromise, gearPromise }: Props) {
             name="gearId"
             defaultValue={page === 'edit' ? (practice?.gearId ?? '') : ''}
           >
-            <SelectTrigger aria-label="Select Your Gear">
+            <SelectTrigger aria-label="Select Your Gear" id="gearId">
               <SelectValue placeholder="Select Your Gear" />
             </SelectTrigger>
             <SelectContent>
