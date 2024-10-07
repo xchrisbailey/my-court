@@ -20,7 +20,7 @@ export function AuthForm({ page }: Props) {
 
   return (
     <>
-      <form action={action} className="space-y-5 min-w-1/3">
+      <form action={action} className="space-y-5 min-w-1/3" aria-label="form">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -29,6 +29,7 @@ export function AuthForm({ page }: Props) {
             name="email"
             required
             placeholder="Enter your address"
+            aria-label="Email"
           />
           {state.errors?.email && <p>{state.errors.email[0]}</p>}
         </div>
@@ -42,6 +43,7 @@ export function AuthForm({ page }: Props) {
             minLength={6}
             required
             placeholder="Enter your password"
+            aria-label="Password"
           />
           {state.errors?.password && <p>{state.errors.password[0]}</p>}
         </div>
