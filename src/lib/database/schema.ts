@@ -127,6 +127,12 @@ export const practices = pgTable('practice', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => createId()),
+  playDate: text('playDate').notNull(),
+  type: text('type').notNull(),
+  location: text('location').notNull(),
+  city: text('city').notNull(),
+  state: text('state').notNull(),
+  notes: text('notes'),
   userId: text('userId').references(() => users.id, { onDelete: 'cascade' }),
   createdAt: timestamp('createdAt').defaultNow(),
 });
