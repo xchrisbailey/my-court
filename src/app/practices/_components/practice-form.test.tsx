@@ -2,6 +2,10 @@ import { GearSetWithRacketAndString, Practice } from '@/shared/types';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { useActionState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
+import {
+  generateRandomGearSetWithRacketAndString,
+  generateRandomPractice,
+} from '../../../../__tests__/mockData';
 import { PracticeForm } from './practice-form';
 
 // Mock the necessary modules
@@ -44,62 +48,10 @@ window.HTMLElement.prototype.releasePointerCapture = vi.fn();
 window.HTMLElement.prototype.hasPointerCapture = vi.fn();
 
 const mockGear: GearSetWithRacketAndString[] = [
-  {
-    id: 'gear1',
-    userId: 'user1',
-    racketId: 'racket1',
-    createdAt: new Date(),
-    stringId: 'string1',
-    stringTensionMains: 50,
-    stringTensionCrosses: 48,
-    racket: {
-      id: 'racket1',
-      model: 'Test Racket',
-      year: 2023,
-      headSize: 100,
-      stringPattern: '16x19',
-      weight: 300,
-      swingWeight: 320,
-      brandId: 'brand1',
-      createdAt: new Date(),
-      brand: {
-        id: 'brand1',
-        name: 'Test Brand',
-        about: 'Test Brand Description',
-        logoLink: 'https://example.com/logo.png',
-        createdAt: new Date(),
-      },
-    },
-    strings: {
-      id: 'string1',
-      model: 'Test String',
-      brandId: 'brand1',
-      createdAt: new Date(),
-      gauge: '16',
-      composition: 'Polyester',
-      brand: {
-        id: 'brand1',
-        name: 'Test Brand',
-        about: 'Test Brand Description',
-        logoLink: 'https://example.com/logo.png',
-        createdAt: new Date(),
-      },
-    },
-  },
+  generateRandomGearSetWithRacketAndString(),
 ];
 
-const mockPractice: Practice = {
-  id: 'practice1',
-  userId: 'user1',
-  createdAt: new Date(),
-  location: 'Test Location',
-  city: 'Test City',
-  state: 'NY',
-  type: 'drill',
-  playDate: '2023-01-01',
-  notes: 'Test Notes',
-  gearId: 'gear1',
-};
+const mockPractice: Practice = generateRandomPractice();
 
 describe('PracticeForm', () => {
   const gearPromise = Promise.resolve(mockGear);
@@ -141,9 +93,11 @@ describe('PracticeForm', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Edit Practice')).toBeInTheDocument();
-      expect(screen.getByDisplayValue('Test Location')).toBeInTheDocument();
-      expect(screen.getByDisplayValue('Test City')).toBeInTheDocument();
-      expect(screen.getByText('California')).toBeInTheDocument(); // State
+      expect(
+        screen.getByDisplayValue(mockPractice.location),
+      ).toBeInTheDocument();
+      expect(screen.getByDisplayValue(mockPractice.city)).toBeInTheDocument();
+      expect(screen.getByText(mockPractice.state)).toBeInTheDocument(); // State
 
       const drillTrigger = screen.getByRole('combobox', {
         name: 'Select practice type',
