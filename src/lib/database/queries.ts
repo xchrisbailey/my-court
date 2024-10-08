@@ -5,13 +5,21 @@ import {
   String as DBString,
   GearSetWithRacketAndString,
   MatchWithRelations,
+  PracticeWithRelations,
   Racket,
   RacketWithBrand,
   StringWithBrand,
 } from '@/shared/types';
 import { and, eq } from 'drizzle-orm';
 import { db } from '.';
-import { brands, gearSets, matches, rackets, strings } from './schema';
+import {
+  brands,
+  gearSets,
+  matches,
+  practices,
+  rackets,
+  strings,
+} from './schema';
 
 export async function getBrand(id: string): Promise<Brand | undefined> {
   return await db.query.brands.findFirst({ where: eq(brands.id, id) });
@@ -142,4 +150,30 @@ export async function getMatches(uid: string) {
   return await db.query.matches.findMany({
     where: eq(matches.userId, uid),
   });
+}
+
+export async function getPracticeWithRelations(
+  id: string,
+  uid: string,
+): Promise<PracticeWithRelations | undefined> {
+  return (await db.query.practices.findFirst({
+    where: and(eq(practices.id, id), eq(practices.userId, uid)),
+    with: {
+      user: true,
+      gear: {
+        with: {
+          racket: {
+            with: {
+              brand: true,
+            },
+          },
+          strings: {
+            with: {
+              brand: true,
+            },
+          },
+        },
+      },
+    },
+  })) as PracticeWithRelations;
 }
