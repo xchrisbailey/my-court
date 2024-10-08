@@ -177,3 +177,9 @@ export async function getPracticeWithRelations(
     },
   })) as PracticeWithRelations;
 }
+
+export async function getPractices(uid: string) {
+  return await db.query.practices.findMany({
+    where: eq(practices.userId, uid),
+  });
+}

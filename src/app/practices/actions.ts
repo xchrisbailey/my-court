@@ -128,10 +128,7 @@ const deletePracticeSchema = z.object({
   practiceId: z.string().cuid2(),
 });
 
-export async function deletePractice(
-  _: PracticeActionState,
-  formData: FormData,
-) {
+export async function deletePractice(formData: FormData) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
@@ -139,9 +136,7 @@ export async function deletePractice(
     Object.fromEntries(formData.entries()),
   );
   if (!parsedForm.success) {
-    return {
-      error: 'Invalid practice data',
-    };
+    throw new Error('could not delete practice');
   }
 
   await db
