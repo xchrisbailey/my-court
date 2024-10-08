@@ -43,7 +43,7 @@ type Props = {
   matchPromise: Promise<MatchWithRelations | undefined>;
 };
 
-export default function MatchViewCard({ matchPromise }: Props) {
+export default function MatchCard({ matchPromise }: Props) {
   const match = use(matchPromise);
   if (!match) notFound();
   return (

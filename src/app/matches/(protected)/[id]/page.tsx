@@ -1,7 +1,7 @@
 import { validateRequest } from '@/lib/auth';
 import { getMatchWithRelations } from '@/lib/database/queries';
 import { Suspense } from 'react';
-import MatchViewCard from '../../_components/match-view-card';
+import MatchCard from '../../_components/match-card';
 
 export default async function MatchViewPage({
   params,
@@ -12,7 +12,7 @@ export default async function MatchViewPage({
   if (!user) throw new Error('Unauthorized');
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <MatchViewCard matchPromise={getMatchWithRelations(params.id, user.id)} />
+      <MatchCard matchPromise={getMatchWithRelations(params.id, user.id)} />
     </Suspense>
   );
 }

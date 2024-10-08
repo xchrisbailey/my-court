@@ -24,7 +24,7 @@ describe('ScoreDisplay', () => {
   });
 
   it('renders the tiebreak scores if provided', async () => {
-    await render(<ScoreDisplay {...mockProps} />);
+    render(<ScoreDisplay {...mockProps} />);
     expect(screen.getByText(/7/i)).toBeInTheDocument();
     expect(screen.getByText(/5/i)).toBeInTheDocument();
   });
