@@ -130,23 +130,16 @@ const deletePracticeSchema = z.object({
   practiceId: z.string().cuid2(),
 });
 
-export async function deletePractice(formData: FormData) {
+export async function deletePractice(practiceId: string) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
-
-  const parsedForm = deletePracticeSchema.safeParse(
-    Object.fromEntries(formData.entries()),
-  );
-  if (!parsedForm.success) {
-    throw new Error('could not delete practice');
-  }
 
   try {
     await db
       .delete(practices)
       .where(
         and(
-          eq(practices.id, parsedForm.data.practiceId),
+          eq(practices.id, practiceId),
           eq(practices.userId, user.id),
         ),
       );

@@ -24,7 +24,7 @@ import {
 import { ArrowUpDown, Edit, Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { use, useState } from 'react';
+import { use, useState, useTransition } from 'react';
 import { deletePractice } from '../actions';
 
 type Props = {
@@ -35,6 +35,7 @@ export default function PracticeTable({ practicesPromise }: Props) {
   const router = useRouter();
   const practices = use(practicesPromise);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [isPending, startTransition] = useTransition();
 
   const columns: ColumnDef<Practice>[] = [
     {
@@ -118,6 +119,14 @@ export default function PracticeTable({ practicesPromise }: Props) {
       id: 'actions',
       cell: ({ row }) => {
         const practice = row.original;
+
+        const handleDelete = (practiceId: string) => {
+          startTransition(async () => {
+            await deletePractice(practiceId);
+            router.refresh();
+          });
+        };
+
         return (
           <div className="flex items-center space-x-2">
             <Link href={`/practices/${practice.id}`} passHref legacyBehavior>
@@ -155,16 +164,11 @@ export default function PracticeTable({ practicesPromise }: Props) {
                     <PopoverClose asChild>
                       <Button variant="ghost">Cancel</Button>
                     </PopoverClose>
-                    <form action={deletePractice}>
-                      <input
-                        type="hidden"
-                        name="practiceId"
-                        value={practice.id}
-                      />
-                      <Button variant="destructive" type="submit">
-                        Delete
-                      </Button>
-                    </form>
+                    <Button variant="destructive" onClick={() => handleDelete(practice.id)} >
+                      {isPending ? 'Deleting...' : 'Delete'}
+
+                    </Button>
+
                   </div>
                 </div>
               </PopoverContent>
@@ -199,9 +203,9 @@ export default function PracticeTable({ practicesPromise }: Props) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
                   </TableHead>
                 );
               })}
