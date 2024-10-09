@@ -126,35 +126,13 @@ export async function editPractice(_: PracticeActionState, formData: FormData) {
   return redirect(`/practices/${updatedPractice[0].id}`);
 }
 
-const deletePracticeSchema = z.object({
-  practiceId: z.string().cuid2(),
-});
-
 export async function deletePractice(practiceId: string) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
-  try {
-    await db
-      .delete(practices)
-      .where(
-        and(
-          eq(practices.id, practiceId),
-          eq(practices.userId, user.id),
-        ),
-      );
-  } catch (err) {
-    console.log(err);
-    // if (err instanceof Error) {
-    //   return {
-    //     error: err.message,
-    //   };
-    // }
-    // return {
-    //   error: 'somethings gone wrong',
-    // };
-  }
+  await db
+    .delete(practices)
+    .where(and(eq(practices.id, practiceId), eq(practices.userId, user.id)));
 
   revalidatePath('/practices');
-  return redirect('/practices');
 }
