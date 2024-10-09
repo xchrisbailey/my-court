@@ -23,6 +23,7 @@ import {
 } from '@tanstack/react-table';
 import { ArrowUpDown, Edit, Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { use, useState } from 'react';
 import { deletePractice } from '../actions';
 
@@ -31,6 +32,7 @@ type Props = {
 };
 
 export default function PracticeTable({ practicesPromise }: Props) {
+  const router = useRouter();
   const practices = use(practicesPromise);
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -159,7 +161,9 @@ export default function PracticeTable({ practicesPromise }: Props) {
                         name="practiceId"
                         value={practice.id}
                       />
-                      <Button variant="destructive">Delete</Button>
+                      <Button variant="destructive" type="submit">
+                        Delete
+                      </Button>
                     </form>
                   </div>
                 </div>

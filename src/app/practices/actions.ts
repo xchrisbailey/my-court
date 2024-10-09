@@ -4,6 +4,7 @@ import { db } from '@/lib/database';
 import { practices } from '@/lib/database/schema';
 import { ActionState, Practice } from '@/shared/types';
 import { and, eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -42,20 +43,20 @@ export async function addPractice(_: PracticeActionState, formData: FormData) {
     };
   }
 
+  let newPractice: { id: string }[];
+
   try {
-    const newPractice = await db
+    newPractice = await db
       .insert(practices)
       .values({
         ...parsedForm.data,
         userId: user.id,
       })
-      .returning();
+      .returning({ id: practices.id });
 
-    if (!newPractice[0]) {
+    if (!newPractice[0].id) {
       throw new Error('Failed to add practice');
     }
-
-    return redirect(`/practices/${newPractice[0].id}`);
   } catch (err) {
     console.error(err);
     if (err instanceof Error) {
@@ -67,6 +68,7 @@ export async function addPractice(_: PracticeActionState, formData: FormData) {
       error: 'Failed to add practice',
     };
   }
+  return redirect(`/practices/${newPractice[0].id}`);
 }
 
 const editPracticeSchema = z.object({
@@ -139,14 +141,27 @@ export async function deletePractice(formData: FormData) {
     throw new Error('could not delete practice');
   }
 
-  await db
-    .delete(practices)
-    .where(
-      and(
-        eq(practices.id, parsedForm.data.practiceId),
-        eq(practices.userId, user.id),
-      ),
-    );
+  try {
+    await db
+      .delete(practices)
+      .where(
+        and(
+          eq(practices.id, parsedForm.data.practiceId),
+          eq(practices.userId, user.id),
+        ),
+      );
+  } catch (err) {
+    console.log(err);
+    // if (err instanceof Error) {
+    //   return {
+    //     error: err.message,
+    //   };
+    // }
+    // return {
+    //   error: 'somethings gone wrong',
+    // };
+  }
 
+  revalidatePath('/practices');
   return redirect('/practices');
 }
