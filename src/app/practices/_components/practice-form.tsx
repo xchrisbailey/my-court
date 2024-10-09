@@ -5,6 +5,7 @@ import {
   editPractice,
   PracticeActionState,
 } from '@/app/practices/actions';
+import { FieldError } from '@/components/field-error';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
@@ -130,6 +131,9 @@ export function PracticeForm({
               defaultValue={page === 'edit' ? practice?.location : ''}
               required
             />
+            {state.errors?.location ? (
+              <FieldError msg={state.errors.location[0]} />
+            ) : null}
           </div>
           <div className="space-y-2">
             <Label htmlFor="city">City</Label>
@@ -140,6 +144,9 @@ export function PracticeForm({
               required
               defaultValue={page === 'edit' ? practice?.city : ''}
             />
+            {state.errors?.city ? (
+              <FieldError msg={state.errors.city[0]} />
+            ) : null}
           </div>
           <div className="space-y-2">
             <Label htmlFor="state">State</Label>
@@ -158,6 +165,9 @@ export function PracticeForm({
                 ))}
               </SelectContent>
             </Select>
+            {state.errors?.state ? (
+              <FieldError msg={state.errors.state[0]} />
+            ) : null}
           </div>
         </div>
         <div className="space-y-2">
@@ -178,6 +188,9 @@ export function PracticeForm({
               <SelectItem value="private lesson">Private Lesson</SelectItem>
             </SelectContent>
           </Select>
+          {state.errors?.type ? (
+            <FieldError msg={state.errors.type[0]} />
+          ) : null}
         </div>
         <div className="space-y-2">
           <Label htmlFor="gearId">Gear Used</Label>
@@ -202,6 +215,9 @@ export function PracticeForm({
               )}
             </SelectContent>
           </Select>
+          {state.errors?.gearId ? (
+            <FieldError msg={state.errors.gearId[0]} />
+          ) : null}
         </div>
         <div className="space-y-2">
           <Label>Date played</Label>
@@ -235,6 +251,9 @@ export function PracticeForm({
             name="playDate"
             value={date ? date.toISOString() : ''}
           />
+          {state.errors?.playDate ? (
+            <FieldError msg={state.errors.playDate[0]} />
+          ) : null}
         </div>
 
         <div className="space-y-2">
@@ -246,6 +265,9 @@ export function PracticeForm({
             />
           </div>
           <input type="hidden" name="notes" value={editorHtmlContent} />
+          {state.errors?.notes ? (
+            <FieldError msg={state.errors.notes[0]} />
+          ) : null}
         </div>
 
         {page === 'edit' ? (
