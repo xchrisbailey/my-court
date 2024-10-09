@@ -102,7 +102,14 @@ describe('PracticeForm', () => {
       const drillTrigger = screen.getByRole('combobox', {
         name: 'Select practice type',
       });
-      expect(within(drillTrigger).getByText('Drill')).toBeInTheDocument();
+      expect(
+        within(drillTrigger).getByText(
+          mockPractice.type
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' '),
+        ),
+      ).toBeInTheDocument();
 
       expect(screen.getByRole('button', { name: 'edit' })).toBeInTheDocument();
     });

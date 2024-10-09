@@ -98,34 +98,39 @@ describe('Practice Actions', () => {
         error: 'Invalid practice data',
       });
     });
-  });
 
-  describe('deletePractice', () => {
-    it('should delete an existing practice and redirect', async () => {
-      (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
-      (db.delete as Mock).mockReturnValue({
-        where: vi.fn().mockReturnThis(),
+    describe('deletePractice', () => {
+      it('should delete an existing practice', async () => {
+        (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
+        (db.delete as Mock).mockReturnValue({
+          where: vi.fn().mockReturnThis(),
+        });
+
+        const result = await deletePractice('practice1');
+
+        expect(db.delete).toHaveBeenCalled();
+        expect(result).toBeUndefined();
       });
 
-      const formData = new FormData();
-      formData.append('practiceId', 'practice1');
+      it('should throw an error if user is not authorized', async () => {
+        (validateRequest as Mock).mockResolvedValue({ user: null });
 
-      const result = await deletePractice({}, formData);
+        await expect(deletePractice('practice1')).rejects.toThrow(
+          'unauthorized',
+        );
+      });
 
-      expect(redirect).toHaveBeenCalledWith('/practices');
-      expect(result).toBeUndefined();
-    });
+      it('should handle database errors gracefully', async () => {
+        (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
+        (db.delete as Mock).mockReturnValue({
+          where: vi.fn().mockImplementation(() => {
+            throw new Error('Database error');
+          }),
+        });
 
-    it('should return error if validation fails', async () => {
-      (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
-
-      const formData = new FormData();
-      formData.append('practiceId', 'invalid-id');
-
-      const result = await deletePractice({}, formData);
-
-      expect(result).toEqual({
-        error: 'Invalid practice data',
+        await expect(deletePractice('practice1')).rejects.toThrow(
+          'Database error',
+        );
       });
     });
   });

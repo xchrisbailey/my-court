@@ -4,7 +4,6 @@ import { db } from '@/lib/database';
 import { practices } from '@/lib/database/schema';
 import { ActionState, Practice } from '@/shared/types';
 import { and, eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -133,6 +132,4 @@ export async function deletePractice(practiceId: string) {
   await db
     .delete(practices)
     .where(and(eq(practices.id, practiceId), eq(practices.userId, user.id)));
-
-  revalidatePath('/practices');
 }
