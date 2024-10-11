@@ -1,5 +1,7 @@
 import { validateRequest } from '@/lib/auth';
 import { db } from '@/lib/database';
+import { brands } from '@/lib/database/schema';
+import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { addBrand, deleteBrand, editBrand } from './actions';
@@ -59,11 +61,9 @@ describe('Brand Actions', () => {
 
     it('should return error if user is unauthorized', async () => {
       (validateRequest as Mock).mockResolvedValue({ user: null });
-
-      // const result = await addBrand({}, new FormData());
-
-      expect(await addBrand({}, new FormData())).toThrowError('unauthorized');
-      // expect(result).toEqual(new Error('unauthorized'));
+      await expect(addBrand({}, new FormData())).rejects.toThrow(
+        'unauthorized',
+      );
     });
   });
 
@@ -116,33 +116,60 @@ describe('Brand Actions', () => {
 
     it('should return error if user is unauthorized', async () => {
       (validateRequest as Mock).mockResolvedValue({ user: null });
-
-      const result = await editBrand({}, new FormData());
-
-      expect(result).toEqual(new Error('unauthorized'));
+      await expect(editBrand({}, new FormData())).rejects.toThrow(
+        'unauthorized',
+      );
     });
   });
 
   describe('deleteBrand', () => {
     it('should delete a brand and redirect', async () => {
       const mockUser = { id: 'user1' };
+      const brandId = 'brand1';
 
       (validateRequest as Mock).mockResolvedValue({ user: mockUser });
+      (db.delete as Mock).mockReturnValue({
+        where: vi.fn().mockReturnThis(),
+        execute: vi.fn().mockResolvedValue(undefined),
+      });
 
-      const result = await deleteBrand('brand1');
+      await deleteBrand(brandId);
 
       expect(validateRequest).toHaveBeenCalled();
       expect(db.delete).toHaveBeenCalledWith(expect.anything());
-      expect(redirect).toHaveBeenCalledWith('/brands');
-      expect(result).toBeUndefined();
+      expect(db.delete(brands).where).toHaveBeenCalledWith(
+        eq(brands.id, brandId),
+      );
+      expect(redirect).toHaveBeenCalled();
     });
 
-    it('should return error if user is unauthorized', async () => {
+    it('should throw an error if user is unauthorized', async () => {
       (validateRequest as Mock).mockResolvedValue({ user: null });
 
-      const result = await deleteBrand('brand1');
+      await expect(deleteBrand('brand1')).rejects.toThrow('unauthorized');
 
-      expect(result).toEqual(new Error('unauthorized'));
+      expect(db.delete).not.toHaveBeenCalled();
+      expect(redirect).not.toHaveBeenCalled();
+    });
+
+    it('should throw an error if deletion fails', async () => {
+      const mockUser = { id: 'user1' };
+      const brandId = 'brand1';
+
+      (validateRequest as Mock).mockResolvedValue({ user: mockUser });
+      (db.delete as Mock).mockReturnValue({
+        where: vi.fn().mockReturnThis(),
+        execute: vi.fn().mockRejectedValue(new Error('Database error')),
+      });
+
+      await expect(deleteBrand(brandId)).rejects.toThrow('Database error');
+
+      expect(validateRequest).toHaveBeenCalled();
+      expect(db.delete).toHaveBeenCalledWith(expect.anything());
+      expect(db.delete(brands).where).toHaveBeenCalledWith(
+        eq(brands.id, brandId),
+      );
+      expect(redirect).not.toHaveBeenCalled();
     });
   });
 });

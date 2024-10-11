@@ -115,7 +115,14 @@ export async function deleteBrand(id: string) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
-  await db.delete(brands).where(eq(brands.id, id));
+  try {
+    await db.delete(brands).where(eq(brands.id, id)).execute();
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error('an unknown error has occurred');
+  }
 
   return redirect('/brands');
 }
