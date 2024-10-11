@@ -129,7 +129,12 @@ export async function deletePractice(practiceId: string) {
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
 
-  await db
-    .delete(practices)
-    .where(and(eq(practices.id, practiceId), eq(practices.userId, user.id)));
+  try {
+    await db
+      .delete(practices)
+      .where(and(eq(practices.id, practiceId), eq(practices.userId, user.id)));
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 }

@@ -98,40 +98,37 @@ describe('Practice Actions', () => {
         error: 'Invalid practice data',
       });
     });
-
-    describe('deletePractice', () => {
-      it('should delete an existing practice', async () => {
-        (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
-        (db.delete as Mock).mockReturnValue({
-          where: vi.fn().mockReturnThis(),
-        });
-
-        const result = await deletePractice('practice1');
-
-        expect(db.delete).toHaveBeenCalled();
-        expect(result).toBeUndefined();
+  });
+  describe('deletePractice', () => {
+    it('should delete an existing practice', async () => {
+      (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
+      (db.delete as Mock).mockReturnValue({
+        where: vi.fn().mockReturnThis(),
       });
 
-      it('should throw an error if user is not authorized', async () => {
-        (validateRequest as Mock).mockResolvedValue({ user: null });
+      const result = await deletePractice('practice1');
 
-        await expect(deletePractice('practice1')).rejects.toThrow(
-          'unauthorized',
-        );
+      expect(db.delete).toHaveBeenCalled();
+      expect(result).toBeUndefined();
+    });
+
+    it('should throw an error if user is not authorized', async () => {
+      (validateRequest as Mock).mockResolvedValue({ user: null });
+
+      await expect(deletePractice('practice1')).rejects.toThrow('unauthorized');
+    });
+
+    it('should handle database errors gracefully', async () => {
+      (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
+      (db.delete as Mock).mockReturnValue({
+        where: vi.fn().mockImplementation(() => {
+          throw new Error('Database error');
+        }),
       });
 
-      it('should handle database errors gracefully', async () => {
-        (validateRequest as Mock).mockResolvedValue({ user: { id: 'user1' } });
-        (db.delete as Mock).mockReturnValue({
-          where: vi.fn().mockImplementation(() => {
-            throw new Error('Database error');
-          }),
-        });
-
-        await expect(deletePractice('practice1')).rejects.toThrow(
-          'Database error',
-        );
-      });
+      await expect(deletePractice('practice1')).rejects.toThrow(
+        'Database error',
+      );
     });
   });
 });

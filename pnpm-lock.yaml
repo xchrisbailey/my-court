@@ -186,6 +186,9 @@ importers:
       '@vitest/coverage-istanbul':
         specifier: ^2.1.2
         version: 2.1.2(vitest@2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(jsdom@25.0.1))
+      '@vitest/coverage-v8':
+        specifier: 2.1.2
+        version: 2.1.2(vitest@2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(jsdom@25.0.1))
       '@vitest/ui':
         specifier: ^2.1.2
         version: 2.1.2(vitest@2.1.2)
@@ -410,6 +413,9 @@ packages:
   '@babel/types@7.25.8':
     resolution: {integrity: sha512-JWtuCu8VQsMladxVz/P4HzHUGCAwpuqacmowgXFs5XjxIgKuNjnLokQzuVjlTvIzODaDmpjT3oxcC48vyk9EWg==}
     engines: {node: '>=6.9.0'}
+
+  '@bcoe/v8-coverage@0.2.3':
+    resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
   '@drizzle-team/brocli@0.10.1':
     resolution: {integrity: sha512-AHy0vjc+n/4w/8Mif+w86qpppHuF3AyXbcWW+R/W7GNA3F5/p2nuhlkCJaTXSLZheB4l1rtHzOfr9A7NwoR/Zg==}
@@ -2362,6 +2368,15 @@ packages:
     resolution: {integrity: sha512-dg7ex3GKrTIenAV0oEp78JucTVFsPMzjl1gYWun22O7SBDxcHFC/REZjWLhMTHRHY8ihm4uBCvmu+CvEu5/Adg==}
     peerDependencies:
       vitest: 2.1.2
+
+  '@vitest/coverage-v8@2.1.2':
+    resolution: {integrity: sha512-b7kHrFrs2urS0cOk5N10lttI8UdJ/yP3nB4JYTREvR5o18cR99yPpK4gK8oQgI42BVv0ILWYUSYB7AXkAUDc0g==}
+    peerDependencies:
+      '@vitest/browser': 2.1.2
+      vitest: 2.1.2
+    peerDependenciesMeta:
+      '@vitest/browser':
+        optional: true
 
   '@vitest/expect@2.1.2':
     resolution: {integrity: sha512-FEgtlN8mIUSEAAnlvn7mP8vzaWhEaAEvhSXCqrsijM7K6QqjB11qoRZYEd4AKSCDz8p0/+yH5LzhZ47qt+EyPg==}
@@ -5138,6 +5153,8 @@ snapshots:
       '@babel/helper-validator-identifier': 7.25.7
       to-fast-properties: 2.0.0
 
+  '@bcoe/v8-coverage@0.2.3': {}
+
   '@drizzle-team/brocli@0.10.1': {}
 
   '@emnapi/core@0.45.0':
@@ -6827,6 +6844,24 @@ snapshots:
       istanbul-lib-source-maps: 5.0.6
       istanbul-reports: 3.1.7
       magicast: 0.3.5
+      test-exclude: 7.0.1
+      tinyrainbow: 1.2.0
+      vitest: 2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(jsdom@25.0.1)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@vitest/coverage-v8@2.1.2(vitest@2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(jsdom@25.0.1))':
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@bcoe/v8-coverage': 0.2.3
+      debug: 4.3.7
+      istanbul-lib-coverage: 3.2.2
+      istanbul-lib-report: 3.0.1
+      istanbul-lib-source-maps: 5.0.6
+      istanbul-reports: 3.1.7
+      magic-string: 0.30.11
+      magicast: 0.3.5
+      std-env: 3.7.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
       vitest: 2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(jsdom@25.0.1)
