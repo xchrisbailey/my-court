@@ -10,10 +10,11 @@ import { PracticeForm } from './practice-form';
 
 // Mock the necessary modules
 vi.mock('react', async () => {
-  const actual = await vi.importActual('react');
+  const actualReact = await vi.importActual('react');
   return {
-    ...actual,
+    ...actualReact,
     useActionState: vi.fn(),
+    forwardRef: actualReact.forwardRef,
   };
 });
 

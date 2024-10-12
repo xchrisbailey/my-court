@@ -1,6 +1,7 @@
 import {
   Brand,
   GearSetWithRacketAndString,
+  Match,
   Practice,
   PracticeWithRelations,
   Racket,
@@ -81,6 +82,29 @@ export const generateRandomGearSetWithRacketAndString =
       strings: string,
     };
   };
+
+export const generateRandomMatch = (): Match => {
+  const user = generateRandomUser();
+  const gear = generateRandomGearSetWithRacketAndString();
+  return {
+    id: createId(),
+    userId: user.id,
+    createdAt: faker.date.past(),
+    location: faker.location.city(),
+    city: faker.location.city(),
+    state: faker.location.state(),
+    type: faker.helpers.arrayElement([
+      'singles',
+      'doubles',
+      'friendly hit',
+      'paid hit',
+      'tournament',
+    ]),
+    playDate: faker.date.future().toISOString(),
+    notes: faker.lorem.sentence(),
+    gearId: gear.id,
+  };
+};
 
 export const generateRandomPractice = (): Practice => {
   const user = generateRandomUser();
