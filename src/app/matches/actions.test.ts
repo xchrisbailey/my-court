@@ -75,7 +75,7 @@ describe('Match Actions', () => {
       formData.append('organization', 'Updated Org');
       formData.append('notes', 'Updated Notes');
 
-      await editMatch({} as any, formData);
+      await editMatch({}, formData);
 
       expect(redirect).toHaveBeenCalledWith('/matches/match123');
     });
