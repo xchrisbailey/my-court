@@ -2,6 +2,7 @@ import {
   Brand,
   GearSetWithRacketAndString,
   Match,
+  MatchWithRelations,
   Practice,
   PracticeWithRelations,
   Racket,
@@ -93,15 +94,21 @@ export const generateRandomMatch = (): Match => {
     location: faker.location.city(),
     city: faker.location.city(),
     state: faker.location.state(),
-    type: faker.helpers.arrayElement([
-      'singles',
-      'doubles',
-      'friendly hit',
-      'paid hit',
-      'tournament',
-    ]),
     playDate: faker.date.future().toISOString(),
     notes: faker.lorem.sentence(),
+    organization: 'USTA',
+    firstSetSelf: faker.number.int({ min: 0, max: 6 }),
+    firstSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    firstSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    firstSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
+    secondSetSelf: faker.number.int({ min: 0, max: 6 }),
+    secondSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    secondSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    secondSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
+    thirdSetSelf: faker.number.int({ min: 0, max: 6 }),
+    thirdSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    thirdSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    thirdSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
     gearId: gear.id,
   };
 };
@@ -156,6 +163,37 @@ export const generateRandomPracticeWithUserAndGear =
       user,
     };
   };
+
+export const generateRandomMatchWithUserAndGear = (): MatchWithRelations => {
+  const user = generateRandomUser();
+  const gear = generateRandomGearSetWithRacketAndString();
+  return {
+    id: createId(),
+    userId: user.id,
+    createdAt: faker.date.past(),
+    location: faker.location.city(),
+    city: faker.location.city(),
+    state: faker.location.state(),
+    playDate: faker.date.future().toISOString(),
+    notes: faker.lorem.sentence(),
+    gearId: gear.id,
+    organization: 'USTA',
+    firstSetSelf: faker.number.int({ min: 0, max: 6 }),
+    firstSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    firstSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    firstSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
+    secondSetSelf: faker.number.int({ min: 0, max: 6 }),
+    secondSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    secondSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    secondSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
+    thirdSetSelf: faker.number.int({ min: 0, max: 6 }),
+    thirdSetOpponent: faker.number.int({ min: 0, max: 6 }),
+    thirdSetTieBreakSelf: faker.number.int({ min: 0, max: 6 }),
+    thirdSetTieBreakOpponent: faker.number.int({ min: 0, max: 6 }),
+    gear,
+    user,
+  };
+};
 
 export const mockUser: User = {
   id: 'user123',
