@@ -13,7 +13,7 @@ export default async function RacketPage({
   params: { id: string };
 }) {
   const racket = await getRacketWithBrand(params.id);
-  if (!racket) notFound();
+  if (!racket) return notFound();
   const { user } = await validateRequest();
 
   return (

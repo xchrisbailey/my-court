@@ -7,7 +7,7 @@ export default async function BrandPage({
   params: { id: string };
 }) {
   const brand = await getBrand(params.id);
-  if (!brand) notFound();
+  if (!brand) return notFound();
 
   return (
     <>

@@ -13,7 +13,7 @@ export default async function stringPage({
   params: { id: string };
 }) {
   const string = await getStringWithBrand(params.id);
-  if (!string) notFound();
+  if (!string) return notFound();
   const { user } = await validateRequest();
 
   return (

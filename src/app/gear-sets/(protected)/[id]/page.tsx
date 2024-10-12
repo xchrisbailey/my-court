@@ -12,7 +12,7 @@ export default async function GearSetPage({
   if (!user) redirect('/login');
 
   const gearSet = await getGearSetWithItems(params.id, user.id);
-  if (!gearSet) notFound();
+  if (!gearSet) return notFound();
 
   return (
     <div className="w-full">

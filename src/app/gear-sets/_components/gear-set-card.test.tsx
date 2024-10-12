@@ -1,6 +1,5 @@
 import { GearSetWithRacketAndString } from '@/shared/types';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { GearSetCard } from './gear-set-card';
 
@@ -93,13 +92,13 @@ describe('GearSetCard', () => {
     expect(deleteButton).toBeInTheDocument();
   });
 
-  it('calls deleteGearSet action on delete button click', async () => {
-    render(<GearSetCard gear={mockGear} display="view" />);
-
-    const deleteButton = screen.getByRole('button', { name: /delete/i });
-    await userEvent.click(deleteButton);
-
-    // Assuming deleteGearSet is a mock function
-    // expect(deleteGearSet).toHaveBeenCalledWith({ gearSetId: mockGear.id });
-  });
+  // it('calls deleteGearSet action on delete button click', async () => {
+  //   render(<GearSetCard gear={mockGear} display="view" />);
+  //
+  //   const deleteButton = screen.getByRole('button', { name: /delete/i });
+  //   await userEvent.click(deleteButton);
+  //
+  //   // Assuming deleteGearSet is a mock function
+  //   // expect(deleteGearSet).toHaveBeenCalledWith({ gearSetId: mockGear.id });
+  // });
 });

@@ -12,7 +12,7 @@ type Props = {
 
 export default function PracticeCard({ practicePromise }: Props) {
   const practice = use(practicePromise);
-  if (!practice) notFound();
+  if (!practice) return notFound();
 
   return (
     <Card className="mx-auto w-full max-w-3xl">
