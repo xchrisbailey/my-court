@@ -45,7 +45,7 @@ type Props = {
 
 export default function MatchCard({ matchPromise }: Props) {
   const match = use(matchPromise);
-  if (!match) notFound();
+  if (!match) return notFound();
   return (
     <Card className="mx-auto w-full max-w-2xl">
       <CardHeader>
