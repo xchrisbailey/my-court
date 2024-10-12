@@ -140,7 +140,16 @@ export async function deleteRacket(formData: FormData) {
     throw new Error('could not delete racket');
   }
 
-  await db.delete(rackets).where(eq(rackets.id, parsedForm.data.racketId));
+  try {
+    const result = await db
+      .delete(rackets)
+      .where(eq(rackets.id, parsedForm.data.racketId));
+    if (result.count === 0) {
+      throw new Error('could not delete racket');
+    }
+  } catch {
+    throw new Error('could not delete racket');
+  }
 
   return redirect('/rackets');
 }
