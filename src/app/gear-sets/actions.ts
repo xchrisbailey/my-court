@@ -62,11 +62,11 @@ export async function addGearSet(_: GearSetActionState, formData: FormData) {
     };
   }
 
-  return redirect(`/gearSets/${newGearSet[0].id}`);
+  return redirect(`/gear-sets/${newGearSet[0].id}`);
 }
 
 const editGearSetSchema = z.object({
-  gearSetId: z.string().cuid2(),
+  gearSetId: z.string().cuid2().min(3),
   racketId: z.string().cuid2().optional(),
   stringId: z.string().cuid2().optional(),
   stringTensionMains: z.coerce.number().min(5).optional(),
@@ -112,7 +112,7 @@ export async function editGearSet(_: GearSetActionState, formData: FormData) {
     };
   }
 
-  return redirect(`/gearSets/${updatedGearSet[0].id}`);
+  return redirect(`/gear-sets/${updatedGearSet[0].id}`);
 }
 
 const deleteGearSetSchema = z.object({
@@ -141,5 +141,5 @@ export async function deleteGearSet(formData: FormData) {
     );
 
   // TODO redirect back to user profile when implemented
-  return redirect('/');
+  return redirect('/gear-sets');
 }
