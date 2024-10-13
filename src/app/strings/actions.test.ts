@@ -30,8 +30,8 @@ describe('String Actions', () => {
         gauge: 'Gauge1',
         brandId: 'brand1',
       };
-      validateRequest.mockResolvedValue({ user: mockUser });
-      db.insert.mockResolvedValue([mockString]);
+      (validateRequest as Mock).mockResolvedValue({ user: mockUser });
+      (db.insert as Mock).mockResolvedValue([mockString]);
 
       const formData = new FormData();
       formData.append('model', 'Model1');
