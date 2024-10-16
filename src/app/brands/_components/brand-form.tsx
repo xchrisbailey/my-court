@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Brand } from '@/shared/types';
+import Form from 'next/form';
 import { use, useActionState } from 'react';
 import { addBrand, BrandActionState, editBrand } from '../(protected)/actions';
 
@@ -24,7 +25,7 @@ export function BrandForm({ page, targetBrandPromise }: Props) {
   return (
     <>
       <h1>{page === 'new' ? 'Add Brand' : `Edit ${brand?.name}`}</h1>
-      <form action={action} className="space-y-5">
+      <Form action={action} className="space-y-5">
         <div>
           <Label htmlFor="name">Name</Label>
           <Input
@@ -68,7 +69,7 @@ export function BrandForm({ page, targetBrandPromise }: Props) {
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'new' ? 'add' : 'edit'}
         </Button>
-      </form>
+      </Form>
     </>
   );
 }

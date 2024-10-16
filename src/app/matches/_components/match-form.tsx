@@ -22,6 +22,7 @@ import { GearSetWithRacketAndString, Match } from '@/shared/types';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import Form from 'next/form';
 import Link from 'next/link';
 import { use, useActionState, useState } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
@@ -110,7 +111,7 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
   return (
     <div className="mx-auto w-full max-w-xl">
       <h1>{page === 'new' ? 'Add Match' : `Edit Match`}</h1>
-      <form action={action} className="space-y-5">
+      <Form action={action} className="space-y-5">
         <input type="submit" disabled hidden />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="space-y-2">
@@ -272,7 +273,7 @@ export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'new' ? 'add' : 'edit'}
         </Button>
-      </form>
+      </Form>
     </div>
   );
 }

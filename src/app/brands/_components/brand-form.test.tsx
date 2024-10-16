@@ -2,7 +2,7 @@ import { Brand } from '@/shared/types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useActionState } from 'react';
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
-import { BrandForm } from './form';
+import { BrandForm } from './brand-form';
 
 // Mock the useActionState hook
 vi.mock('react', async () => {

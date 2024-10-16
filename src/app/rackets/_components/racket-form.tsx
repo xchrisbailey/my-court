@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Brand, Racket } from '@/shared/types';
+import Form from 'next/form';
 import { use, useActionState } from 'react';
 import { addRacket, editRacket, RacketActionState } from '../actions';
 
@@ -38,7 +39,7 @@ export function RacketForm({
   return (
     <>
       <h1>{page === 'new' ? 'Add Racket' : `Edit ${racket?.model}`}</h1>
-      <form action={action} className="space-y-5">
+      <Form action={action} className="space-y-5">
         <div className="flex flex-col gap-4 md:flex-row">
           <div className="w-full">
             <Label htmlFor="model">Model</Label>
@@ -182,7 +183,7 @@ export function RacketForm({
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'new' ? 'add' : 'edit'}
         </Button>
-      </form>
+      </Form>
     </>
   );
 }
