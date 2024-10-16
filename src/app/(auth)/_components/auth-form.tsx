@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Form from 'next/form';
 import { useActionState } from 'react';
 import { AuthActionState, login, signup } from '../actions';
 
@@ -21,7 +20,7 @@ export function AuthForm({ page }: Props) {
 
   return (
     <>
-      <Form action={action} className="space-y-5 min-w-1/3" aria-label="form">
+      <form action={action} className="space-y-5 min-w-1/3" aria-label="form">
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -56,7 +55,7 @@ export function AuthForm({ page }: Props) {
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'login' ? 'login' : 'signup'}
         </Button>
-      </Form>
+      </form>
     </>
   );
 }

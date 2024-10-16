@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Brand, String } from '@/shared/types';
-import Form from 'next/form';
 import { use, useActionState } from 'react';
 import { addString, editString, StringActionState } from '../actions';
 
@@ -48,7 +47,7 @@ export function StringForm({
   return (
     <>
       <h1>{page === 'new' ? 'Add String' : `Edit ${stringData?.model}`}</h1>
-      <Form action={action} className="space-y-5">
+      <form action={action} className="space-y-5">
         <div className="flex flex-col gap-4">
           <div className="w-full">
             <Label htmlFor="model">Model</Label>
@@ -141,7 +140,7 @@ export function StringForm({
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'new' ? 'add' : 'edit'}
         </Button>
-      </Form>
+      </form>
     </>
   );
 }

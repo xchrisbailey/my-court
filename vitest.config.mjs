@@ -7,8 +7,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: './__tests__/setup.ts',
-    coverage: {
-      provider: 'v8', // or 'v8'
-    },
+    coverage: { provider: 'v8', reporter: ['html', 'lcov'], enabled: true },
+    exclude: ['**/node_modules/**', '**/dist/**', '**/src/components/ui/**'],
   },
 });

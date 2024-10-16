@@ -16,7 +16,6 @@ import {
   RacketWithBrand,
   StringWithBrand,
 } from '@/shared/types';
-import Form from 'next/form';
 import { use, useActionState } from 'react';
 import { addGearSet, editGearSet, GearSetActionState } from '../actions';
 
@@ -46,7 +45,7 @@ export function GearSetForm({
   return (
     <>
       <h1>{page === 'new' ? 'Create A Gear Set' : `Edit Gear Set`}</h1>
-      <Form action={action} className="space-y-5">
+      <form action={action} className="space-y-5">
         <div className="flex flex-col gap-4 md:flex-row">
           <div className="w-full">
             <Label htmlFor="racketId">Racket</Label>
@@ -135,7 +134,7 @@ export function GearSetForm({
         <Button disabled={pending}>
           {pending ? 'loading...' : page === 'new' ? 'create' : 'edit'}
         </Button>
-      </Form>
+      </form>
     </>
   );
 }
