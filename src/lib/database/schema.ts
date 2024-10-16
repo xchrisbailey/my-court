@@ -153,10 +153,10 @@ export const brands = pgTable('brands', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => createId()),
-  name: text('name').notNull(),
-  about: text('about').notNull(),
-  logoLink: text('logoLink').notNull(),
-  createdAt: timestamp('createdAt').defaultNow(),
+  name: text().notNull(),
+  about: text().notNull(),
+  logoLink: text().notNull(),
+  createdAt: timestamp().defaultNow(),
 });
 
 export const brandsRelations = relations(brands, ({ many }) => ({

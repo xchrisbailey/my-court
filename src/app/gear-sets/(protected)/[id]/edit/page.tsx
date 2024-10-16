@@ -6,11 +6,12 @@ import {
   getStringsWithBrand,
 } from '@/lib/database/queries';
 
-export default async function EditGearSetPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function EditGearSetPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const { user } = await validateRequest();
   if (!user) throw new Error('unauthorized');
   return (

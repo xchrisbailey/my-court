@@ -4,11 +4,12 @@ import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import PracticeCard from '../../_components/practice-card';
 
-export default async function PracticeViewPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function PracticeViewPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const { user } = await validateRequest();
   if (!user) return redirect('/login');
 

@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { RacketWithBrand, StringWithBrand } from '@/shared/types';
 import Link from 'next/link';
-import React, { use } from 'react';
+import React, { use, type JSX } from 'react';
 
 type Props = {
   racketsPromise?: Promise<RacketWithBrand[]>;

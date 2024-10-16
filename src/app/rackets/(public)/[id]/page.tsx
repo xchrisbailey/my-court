@@ -7,11 +7,12 @@ import { Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function RacketPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function RacketPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const racket = await getRacketWithBrand(params.id);
   if (!racket) return notFound();
   const { user } = await validateRequest();
