@@ -1,4 +1,3 @@
-import robotar from '@/assets/images/robotar.svg';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -19,9 +18,14 @@ export default async function ProfilePage() {
   const userWithRelations = await db.query.users.findFirst({
     where: eq(users.id, user.id),
     with: {
-      matches: true,
-      practices: true,
+      matches: {
+        limit: 2,
+      },
+      practices: {
+        limit: 2,
+      },
       gearSets: {
+        limit: 1,
         with: {
           racket: {
             with: {
@@ -47,7 +51,7 @@ export default async function ProfilePage() {
       <Card>
         <CardContent className="flex items-center pt-6 space-x-4">
           <Avatar className="w-24 h-24">
-            <AvatarImage src={robotar} alt={'chris bailey'} />
+            <AvatarImage src={'/robotar.svg'} alt={'chris bailey'} />
             <AvatarFallback>
               {'chris bailey'
                 .split(' ')
@@ -80,7 +84,7 @@ export default async function ProfilePage() {
                 >
                   <div>
                     <p className="font-medium">
-                      {match.organization.toUpperCase()}
+                      {match.organization.toUpperCase()} @ {match.location}
                     </p>
 
                     <p className="text-sm text-muted-foreground">
@@ -116,13 +120,27 @@ export default async function ProfilePage() {
               {userWithRelations.practices.map(practice => (
                 <li
                   key={practice.id}
-                  className="flex justify-between items-center"
+                  className="flex justify-between items-start"
                 >
                   <div>
                     <p className="font-medium">{practice.type}</p>
                     <p className="text-sm text-muted-foreground">
-                      {new Date(practice.playDate).toLocaleDateString()}
+                      {practice.playDate}
                     </p>
+                    <p className="text-sm">{`${practice.location}, ${practice.city}, ${practice.state}`}</p>
+                  </div>
+                  <div className="text-right">
+                    <Badge variant="outline">
+                      {new Date(practice.playDate).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </Badge>
+                    {practice.notes && (
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {practice.notes}
+                      </p>
+                    )}
                   </div>
                 </li>
               ))}
