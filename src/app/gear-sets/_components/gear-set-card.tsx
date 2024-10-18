@@ -3,14 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
-import { GearSetWithRacketAndString } from '@/shared/types';
+import { GearSetWithRelations } from '@/shared/types';
 import { Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { deleteGearSet } from '../actions';
 
 interface TennisGearProps {
   display: 'view' | 'list';
-  gear: GearSetWithRacketAndString;
+  gear: GearSetWithRelations;
 }
 
 export function GearSetCard({ gear, display }: TennisGearProps) {

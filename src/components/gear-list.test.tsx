@@ -1,10 +1,10 @@
-import { RacketWithBrand, StringWithBrand } from '@/shared/types';
+import { RacketWithRelations, StringWithRelations } from '@/shared/types';
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { RacketListCard, StringListCard } from './gear-list';
 
 describe('StringListCard', () => {
-  const mockString: StringWithBrand = {
+  const mockString: StringWithRelations = {
     id: '1',
     model: 'Pro String',
     brandId: '1',
@@ -48,7 +48,7 @@ describe('StringListCard', () => {
 });
 
 describe('RacketListCard', () => {
-  const mockRacket: RacketWithBrand = {
+  const mockRacket: RacketWithRelations = {
     id: '1',
     model: 'Pro Racket',
     brandId: '1',

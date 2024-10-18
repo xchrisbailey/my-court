@@ -3,12 +3,13 @@
 import {
   Brand,
   String as DBString,
-  GearSetWithRacketAndString,
+  GearSetWithRelations,
   MatchWithRelations,
   PracticeWithRelations,
   Racket,
-  RacketWithBrand,
-  StringWithBrand,
+  RacketWithRelations,
+  StringWithRelations,
+  UserWithRelations,
 } from '@/shared/types';
 import { and, eq } from 'drizzle-orm';
 import { db } from '.';
@@ -19,6 +20,7 @@ import {
   practices,
   rackets,
   strings,
+  users,
 } from './schema';
 
 export async function getBrand(id: string): Promise<Brand | undefined> {
@@ -33,7 +35,7 @@ export async function getRackets(): Promise<Racket[]> {
   return await db.query.rackets.findMany({});
 }
 
-export async function getRacketsWithBrand(): Promise<RacketWithBrand[]> {
+export async function getRacketsWithBrand(): Promise<RacketWithRelations[]> {
   return await db.query.rackets.findMany({
     with: { brand: true },
   });
@@ -47,18 +49,18 @@ export async function getRacket(id: string): Promise<Racket | undefined> {
 
 export async function getRacketWithBrand(
   id: string,
-): Promise<RacketWithBrand | undefined> {
+): Promise<RacketWithRelations | undefined> {
   return (await db.query.rackets.findFirst({
     where: eq(rackets.id, id),
     with: { brand: true },
-  })) as RacketWithBrand;
+  })) as RacketWithRelations;
 }
 
 export async function getStrings(): Promise<DBString[]> {
   return await db.query.strings.findMany({});
 }
 
-export async function getStringsWithBrand(): Promise<StringWithBrand[]> {
+export async function getStringsWithBrand(): Promise<StringWithRelations[]> {
   return await db.query.strings.findMany({
     with: { brand: true },
   });
@@ -72,17 +74,17 @@ export async function getString(id: string): Promise<DBString | undefined> {
 
 export async function getStringWithBrand(
   id: string,
-): Promise<StringWithBrand | undefined> {
+): Promise<StringWithRelations | undefined> {
   return (await db.query.strings.findFirst({
     where: eq(strings.id, id),
     with: { brand: true },
-  })) as StringWithBrand;
+  })) as StringWithRelations;
 }
 
 export async function getGearSetWithItems(
   id: string,
   uid: string,
-): Promise<GearSetWithRacketAndString | undefined> {
+): Promise<GearSetWithRelations | undefined> {
   return (await db.query.gearSets.findFirst({
     where: and(eq(gearSets.id, id), eq(gearSets.userId, uid)),
     with: {
@@ -97,12 +99,12 @@ export async function getGearSetWithItems(
         },
       },
     },
-  })) as GearSetWithRacketAndString;
+  })) as GearSetWithRelations;
 }
 
 export async function getGearSetsWithItems(
   uid: string,
-): Promise<GearSetWithRacketAndString[]> {
+): Promise<GearSetWithRelations[]> {
   return (await db.query.gearSets.findMany({
     where: eq(gearSets.userId, uid),
     with: {
@@ -117,7 +119,7 @@ export async function getGearSetsWithItems(
         },
       },
     },
-  })) as GearSetWithRacketAndString[];
+  })) as GearSetWithRelations[];
 }
 
 export async function getMatchWithRelations(
@@ -181,5 +183,36 @@ export async function getPracticeWithRelations(
 export async function getPractices(uid: string) {
   return await db.query.practices.findMany({
     where: eq(practices.userId, uid),
+  });
+}
+
+export async function getUserWithRelations(
+  userId: string,
+): Promise<UserWithRelations | undefined> {
+  return await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    with: {
+      matches: {
+        limit: 2,
+      },
+      practices: {
+        limit: 2,
+      },
+      gearSets: {
+        limit: 1,
+        with: {
+          racket: {
+            with: {
+              brand: true,
+            },
+          },
+          strings: {
+            with: {
+              brand: true,
+            },
+          },
+        },
+      },
+    },
   });
 }

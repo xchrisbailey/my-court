@@ -8,6 +8,9 @@ import { users } from '@/lib/database/schema';
 import { eq } from 'drizzle-orm';
 import { Dumbbell, ShoppingBag, Trophy } from 'lucide-react';
 import { redirect } from 'next/navigation';
+import { ProfileGearSetCard } from './_components/profile-gear-set-card';
+import { ProfileMatchCard } from './_components/profile-match-card';
+import { ProfilePracticeCard } from './_components/profile-practice-card';
 
 export default async function ProfilePage() {
   const { user } = await validateRequest();
@@ -78,31 +81,7 @@ export default async function ProfilePage() {
           <CardContent>
             <ul className="space-y-4">
               {userWithRelations.matches.map(match => (
-                <li
-                  key={match.id}
-                  className="flex justify-between items-center"
-                >
-                  <div>
-                    <p className="font-medium">
-                      {match.organization.toUpperCase()} @ {match.location}
-                    </p>
-
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(match.playDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant={'win' === 'win' ? 'default' : 'secondary'}>
-                      WIN
-                    </Badge>
-                    <p className="text-sm">
-                      {match.firstSetSelf}, {match.firstSetOpponent}
-                    </p>
-                    <p className="text-sm">
-                      {match.secondSetSelf}, {match.secondSetOpponent}
-                    </p>
-                  </div>
-                </li>
+                <ProfileMatchCard match={match} key={match.id} />
               ))}
             </ul>
           </CardContent>
@@ -118,31 +97,7 @@ export default async function ProfilePage() {
           <CardContent>
             <ul className="space-y-4">
               {userWithRelations.practices.map(practice => (
-                <li
-                  key={practice.id}
-                  className="flex justify-between items-start"
-                >
-                  <div>
-                    <p className="font-medium">{practice.type}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {practice.playDate}
-                    </p>
-                    <p className="text-sm">{`${practice.location}, ${practice.city}, ${practice.state}`}</p>
-                  </div>
-                  <div className="text-right">
-                    <Badge variant="outline">
-                      {new Date(practice.playDate).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </Badge>
-                    {practice.notes && (
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        {practice.notes}
-                      </p>
-                    )}
-                  </div>
-                </li>
+                <ProfilePracticeCard practice={practice} key={practice.id} />
               ))}
             </ul>
           </CardContent>
@@ -158,22 +113,7 @@ export default async function ProfilePage() {
         <CardContent>
           <ul className="space-y-4">
             {userWithRelations.gearSets.map(gearSet => (
-              <li key={gearSet.id} className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  <Badge variant="outline">Racket</Badge>
-                  <span className="font-medium">{gearSet.racket.model}</span>
-                  <span className="text-muted-foreground">
-                    by {gearSet.racket.brand.name}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Badge variant="outline">String</Badge>
-                  <span className="font-medium">{gearSet.strings.model}</span>
-                  <span className="text-muted-foreground">
-                    by {gearSet.strings.brand.name}
-                  </span>
-                </div>
-              </li>
+              <ProfileGearSetCard gearSet={gearSet} key={gearSet.id} />
             ))}
           </ul>
         </CardContent>

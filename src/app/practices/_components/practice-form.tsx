@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { GearSetWithRacketAndString, Practice } from '@/shared/types';
+import { GearSetWithRelations, Practice } from '@/shared/types';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -89,7 +89,7 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 type Props = {
   page: 'new' | 'edit';
   targetPracticePromise?: Promise<Practice | undefined>;
-  gearPromise: Promise<GearSetWithRacketAndString[] | undefined>;
+  gearPromise: Promise<GearSetWithRelations[] | undefined>;
 };
 
 export function PracticeForm({

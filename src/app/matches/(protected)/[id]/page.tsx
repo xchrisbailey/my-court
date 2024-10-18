@@ -3,11 +3,9 @@ import { getMatchWithRelations } from '@/lib/database/queries';
 import { Suspense } from 'react';
 import MatchCard from '../../_components/match-card';
 
-export default async function MatchViewPage(
-  props: {
-    params: Promise<{ id: string }>;
-  }
-) {
+export default async function MatchViewPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { user } = await validateRequest();
   if (!user) throw new Error('Unauthorized');

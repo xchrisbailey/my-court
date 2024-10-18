@@ -1,7 +1,7 @@
 import {
-  GearSetWithRacketAndString,
-  RacketWithBrand,
-  StringWithBrand,
+  GearSetWithRelations,
+  RacketWithRelations,
+  StringWithRelations,
 } from '@/shared/types';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -12,7 +12,7 @@ vi.mock('../actions', () => ({
   editGearSet: vi.fn(),
 }));
 
-const mockRackets: RacketWithBrand[] = [
+const mockRackets: RacketWithRelations[] = [
   {
     id: '1',
     brand: {
@@ -51,7 +51,7 @@ const mockRackets: RacketWithBrand[] = [
   },
 ];
 
-const mockStrings: StringWithBrand[] = [
+const mockStrings: StringWithRelations[] = [
   {
     id: '1',
     brand: {
@@ -84,7 +84,7 @@ const mockStrings: StringWithBrand[] = [
   },
 ];
 
-const mockGearSet: GearSetWithRacketAndString = {
+const mockGearSet: GearSetWithRelations = {
   id: '1',
   createdAt: null,
   userId: 'user1',
