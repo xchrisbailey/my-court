@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserWithRelations } from '@/shared/types';
 import { Badge, Dumbbell, ShoppingBag, Trophy } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { use } from 'react';
 
 type Props = {
@@ -17,10 +17,7 @@ type Props = {
 
 export function ProfileView({ userPromise }: Props) {
   const user = use(userPromise);
-  const router = useRouter();
-  if (!user) {
-    router.push('/login');
-  }
+  if (!user) notFound();
 
   return (
     <div className="container p-4 mx-auto space-y-6">
