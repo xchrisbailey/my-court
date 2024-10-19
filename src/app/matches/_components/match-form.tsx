@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { GearSetWithRacketAndString, Match } from '@/shared/types';
+import { GearSetWithRelations, Match } from '@/shared/types';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -86,7 +86,7 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 type Props = {
   page: 'new' | 'edit';
   targetMatchPromise?: Promise<Match | undefined>;
-  gearPromise: Promise<GearSetWithRacketAndString[] | undefined>;
+  gearPromise: Promise<GearSetWithRelations[] | undefined>;
 };
 
 export function MatchForm({ page, targetMatchPromise, gearPromise }: Props) {

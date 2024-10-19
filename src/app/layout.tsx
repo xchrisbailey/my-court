@@ -4,8 +4,7 @@ import { SessionProvider } from '@/lib/auth/context';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import Header from './header';
-import { NavigationLinks } from './navigation';
+import SideBarView from './sidebar';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -31,15 +30,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider value={session}>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <div className="flex flex-1">
-              <aside className="hidden w-64 lg:block">
-                <NavigationLinks />
-              </aside>
-              <main className="flex-1 p-4">{children}</main>
-            </div>
-          </div>
+          <SideBarView>
+            <main className="flex-1 p-4">{children}</main>
+          </SideBarView>
           <Toaster position="top-center" />
         </SessionProvider>
       </body>

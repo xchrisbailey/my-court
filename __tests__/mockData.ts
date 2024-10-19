@@ -1,14 +1,14 @@
 import {
   Brand,
-  GearSetWithRacketAndString,
+  GearSetWithRelations,
   Match,
   MatchWithRelations,
   Practice,
   PracticeWithRelations,
   Racket,
-  RacketWithBrand,
+  RacketWithRelations,
   String,
-  StringWithBrand,
+  StringWithRelations,
   User,
 } from '@/shared/types';
 import { faker } from '@faker-js/faker';
@@ -40,7 +40,7 @@ export const generateRandomRacket = (): Racket => ({
   brandId: createId(),
 });
 
-export const generateRandomRacketWithBrand = (): RacketWithBrand => {
+export const generateRandomRacketWithBrand = (): RacketWithRelations => {
   const brand = generateRandomBrand();
   return {
     ...generateRandomRacket(),
@@ -58,7 +58,7 @@ export const generateRandomString = (): String => ({
   brandId: createId(),
 });
 
-export const generateRandomStringWithBrand = (): StringWithBrand => {
+export const generateRandomStringWithBrand = (): StringWithRelations => {
   const brand = generateRandomBrand();
   return {
     ...generateRandomString(),
@@ -68,7 +68,7 @@ export const generateRandomStringWithBrand = (): StringWithBrand => {
 };
 
 export const generateRandomGearSetWithRacketAndString =
-  (): GearSetWithRacketAndString => {
+  (): GearSetWithRelations => {
     const racket = generateRandomRacketWithBrand();
     const string = generateRandomStringWithBrand();
     return {
@@ -221,7 +221,7 @@ export const mockRacket: Racket = {
   brandId: 'brand123',
 };
 
-export const mockRacketWithBrand: RacketWithBrand = {
+export const mockRacketWithBrand: RacketWithRelations = {
   id: 'racket123',
   model: 'Test Racket',
   headSize: 100,
@@ -243,7 +243,7 @@ export const mockString: String = {
   brandId: 'brand123',
 };
 
-export const mockStringWithBrand: StringWithBrand = {
+export const mockStringWithBrand: StringWithRelations = {
   id: 'string123',
   model: 'Test String',
   gauge: '1.25mm',

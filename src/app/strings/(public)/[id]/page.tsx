@@ -7,11 +7,9 @@ import { Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export default async function stringPage(
-  props: {
-    params: Promise<{ id: string }>;
-  }
-) {
+export default async function stringPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const string = await getStringWithBrand(params.id);
   if (!string) return notFound();

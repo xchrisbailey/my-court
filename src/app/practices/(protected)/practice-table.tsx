@@ -164,11 +164,12 @@ export default function PracticeTable({ practicesPromise }: Props) {
                     <PopoverClose asChild>
                       <Button variant="ghost">Cancel</Button>
                     </PopoverClose>
-                    <Button variant="destructive" onClick={() => handleDelete(practice.id)} >
+                    <Button
+                      variant="destructive"
+                      onClick={() => handleDelete(practice.id)}
+                    >
                       {isPending ? 'Deleting...' : 'Delete'}
-
                     </Button>
-
                   </div>
                 </div>
               </PopoverContent>
@@ -203,9 +204,9 @@ export default function PracticeTable({ practicesPromise }: Props) {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 );
               })}

@@ -1,4 +1,4 @@
-import { GearSetWithRacketAndString, Match } from '@/shared/types';
+import { GearSetWithRelations, Match } from '@/shared/types';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { useActionState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
@@ -34,7 +34,7 @@ window.HTMLElement.prototype.scrollIntoView = vi.fn();
 window.HTMLElement.prototype.releasePointerCapture = vi.fn();
 window.HTMLElement.prototype.hasPointerCapture = vi.fn();
 
-const mockGear: GearSetWithRacketAndString[] = [
+const mockGear: GearSetWithRelations[] = [
   {
     id: '1',
     userId: 'user1',

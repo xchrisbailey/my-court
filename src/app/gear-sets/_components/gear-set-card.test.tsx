@@ -1,9 +1,9 @@
-import { GearSetWithRacketAndString } from '@/shared/types';
+import { GearSetWithRelations } from '@/shared/types';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { GearSetCard } from './gear-set-card';
 
-const mockGear: GearSetWithRacketAndString = {
+const mockGear: GearSetWithRelations = {
   id: '1',
   createdAt: new Date(),
   userId: 'user1',

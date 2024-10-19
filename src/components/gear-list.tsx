@@ -6,13 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { RacketWithBrand, StringWithBrand } from '@/shared/types';
+import { RacketWithRelations, StringWithRelations } from '@/shared/types';
 import Link from 'next/link';
 import React, { use, type JSX } from 'react';
 
 type Props = {
-  racketsPromise?: Promise<RacketWithBrand[]>;
-  stringsPromise?: Promise<StringWithBrand[]>;
+  racketsPromise?: Promise<RacketWithRelations[]>;
+  stringsPromise?: Promise<StringWithRelations[]>;
 };
 
 export function GearList({ racketsPromise, stringsPromise }: Props) {
@@ -20,8 +20,12 @@ export function GearList({ racketsPromise, stringsPromise }: Props) {
   const strings = stringsPromise ? use(stringsPromise) : null;
 
   const gear: JSX.Element[] = [];
-  rackets?.map(racket => gear.push(<RacketListCard racket={racket} />));
-  strings?.map(string => gear.push(<StringListCard string={string} />));
+  rackets?.map(racket =>
+    gear.push(<RacketListCard racket={racket} key={racket.id} />),
+  );
+  strings?.map(string =>
+    gear.push(<StringListCard string={string} key={string.id} />),
+  );
 
   return (
     <div className="container py-2 mx-auto">
@@ -32,7 +36,7 @@ export function GearList({ racketsPromise, stringsPromise }: Props) {
   );
 }
 
-export function RacketListCard({ racket }: { racket: RacketWithBrand }) {
+export function RacketListCard({ racket }: { racket: RacketWithRelations }) {
   return (
     <Link
       href={`/rackets/${racket.id}`}
@@ -59,7 +63,7 @@ export function RacketListCard({ racket }: { racket: RacketWithBrand }) {
   );
 }
 
-export function StringListCard({ string }: { string: StringWithBrand }) {
+export function StringListCard({ string }: { string: StringWithRelations }) {
   return (
     <Link
       href={`/strings/${string.id}`}

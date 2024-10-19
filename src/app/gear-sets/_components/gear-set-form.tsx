@@ -12,18 +12,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  GearSetWithRacketAndString,
-  RacketWithBrand,
-  StringWithBrand,
+  GearSetWithRelations,
+  RacketWithRelations,
+  StringWithRelations,
 } from '@/shared/types';
 import { use, useActionState } from 'react';
 import { addGearSet, editGearSet, GearSetActionState } from '../actions';
 
 type Props = {
   page: 'new' | 'edit';
-  targetGearSet?: Promise<GearSetWithRacketAndString | undefined>;
-  racketsPromise: Promise<RacketWithBrand[]>;
-  stringsPromise: Promise<StringWithBrand[]>;
+  targetGearSet?: Promise<GearSetWithRelations | undefined>;
+  racketsPromise: Promise<RacketWithRelations[]>;
+  stringsPromise: Promise<StringWithRelations[]>;
 };
 
 export function GearSetForm({
