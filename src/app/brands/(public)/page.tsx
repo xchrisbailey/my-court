@@ -1,6 +1,7 @@
+import { BrandsListSkeleton } from '@/app/brands/_components/brand-list-skeleton';
 import { getBrands } from '@/lib/database/queries';
 import { Suspense } from 'react';
-import { BrandsList } from './brandList';
+import { BrandsList } from '../_components/brand-list';
 
 export default async function BrandsPage() {
   const brands = await getBrands();
@@ -11,13 +12,7 @@ export default async function BrandsPage() {
   return (
     <>
       <h1>Brands</h1>
-      <Suspense
-        fallback={
-          <>
-            <p>Loading...</p>
-          </>
-        }
-      >
+      <Suspense fallback={<BrandsListSkeleton />}>
         <BrandsList brandsPromise={brandsPromise} />
       </Suspense>
     </>
