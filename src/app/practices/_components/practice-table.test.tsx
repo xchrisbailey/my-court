@@ -62,7 +62,6 @@ describe('PracticeTable', () => {
       expect(screen.getByText('Field B')).toBeInTheDocument();
       expect(screen.getByText('Los Angeles')).toBeInTheDocument();
       expect(screen.getByText('CA')).toBeInTheDocument();
-      // expect(screen.getByText('11/1/2023')).toBeInTheDocument();
     });
   });
 
