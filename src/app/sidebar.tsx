@@ -2,6 +2,14 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -26,6 +34,7 @@ import {
 } from '@/components/ui/sidebar';
 import { LogOut, Trophy, User } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
 // This is sample data.
@@ -38,7 +47,6 @@ const data = {
         {
           title: 'Rackets',
           url: '/rackets',
-          isActive: true,
         },
         {
           title: 'Strings',
@@ -72,6 +80,10 @@ export default function SideBarView({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  React.useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
   return (
     <SidebarProvider
       style={
@@ -113,7 +125,7 @@ export default function SideBarView({
                         <SidebarMenuSubItem key={item.title}>
                           <SidebarMenuSubButton
                             asChild
-                            isActive={item.isActive}
+                            isActive={pathname === item.url}
                           >
                             <a href={item.url}>{item.title}</a>
                           </SidebarMenuSubButton>
@@ -132,7 +144,22 @@ export default function SideBarView({
           <div className="flex gap-2 items-center">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="h-6" />
-            <h1 className="text-xl font-semibold">My Court</h1>
+            {/* <h1 className="text-xl font-semibold">My Court</h1> */}
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="/">my court</BreadcrumbLink>
+                </BreadcrumbItem>
+                {pathname !== '/' ? (
+                  <>
+                    <BreadcrumbSeparator className="hidden md:block" />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{pathname.split('/')}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                ) : null}
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

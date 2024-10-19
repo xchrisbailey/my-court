@@ -20,8 +20,12 @@ export function GearList({ racketsPromise, stringsPromise }: Props) {
   const strings = stringsPromise ? use(stringsPromise) : null;
 
   const gear: JSX.Element[] = [];
-  rackets?.map(racket => gear.push(<RacketListCard racket={racket} />));
-  strings?.map(string => gear.push(<StringListCard string={string} />));
+  rackets?.map(racket =>
+    gear.push(<RacketListCard racket={racket} key={racket.id} />),
+  );
+  strings?.map(string =>
+    gear.push(<StringListCard string={string} key={string.id} />),
+  );
 
   return (
     <div className="container py-2 mx-auto">
