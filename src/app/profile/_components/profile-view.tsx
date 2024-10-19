@@ -50,9 +50,11 @@ export function ProfileView({ userPromise }: Props) {
           </CardHeader>
           <CardContent>
             <ul className="space-y-4">
-              {user.matches.map(match => (
-                <ProfileMatchCard match={match} key={match.id} />
-              ))}
+              {user.matches
+                ? user.matches.map(match => (
+                    <ProfileMatchCard match={match} key={match.id} />
+                  ))
+                : null}
             </ul>
           </CardContent>
         </Card>
@@ -66,9 +68,14 @@ export function ProfileView({ userPromise }: Props) {
           </CardHeader>
           <CardContent>
             <ul className="space-y-4">
-              {user.practices.map(practice => (
-                <ProfilePracticeCard practice={practice} key={practice.id} />
-              ))}
+              {user.practices
+                ? user.practices.map(practice => (
+                    <ProfilePracticeCard
+                      practice={practice}
+                      key={practice.id}
+                    />
+                  ))
+                : null}
             </ul>
           </CardContent>
         </Card>
@@ -82,9 +89,11 @@ export function ProfileView({ userPromise }: Props) {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {user.gearSets.map(gearSet => (
-              <ProfileGearSetCard gearSet={gearSet} key={gearSet.id} />
-            ))}
+            {user.gearSets
+              ? user.gearSets.map(gearSet => (
+                  <ProfileGearSetCard gearSet={gearSet} key={gearSet.id} />
+                ))
+              : null}
           </ul>
         </CardContent>
       </Card>
