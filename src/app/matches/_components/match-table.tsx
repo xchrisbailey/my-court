@@ -1,29 +1,15 @@
 'use client';
 
+import PlayTable from '@/components/play-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger } from '@/components/ui/popover';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Match } from '@/shared/types';
 import { PopoverClose, PopoverContent } from '@radix-ui/react-popover';
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, Edit, Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { use, useState } from 'react';
+import { use } from 'react';
 import { deleteMatch } from '../actions';
 import { matchOutcome } from '../utils';
 
@@ -33,102 +19,86 @@ type Props = {
 
 export default function MatchTable({ matchesPromise }: Props) {
   const matches = use(matchesPromise);
-  const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns: ColumnDef<Match>[] = [
     {
       accessorKey: 'organization',
-      cell: ({ row }) => {
-        return (
-          <Badge variant="secondary">
-            {row.original.organization.toUpperCase()}
-          </Badge>
-        );
-      },
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Organization
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      cell: ({ row }) => (
+        <Badge variant="secondary">
+          {row.original.organization.toUpperCase()}
+        </Badge>
+      ),
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Organization
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'location',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Location
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Location
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'city',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            City
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          City
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'state',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            State
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          State
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
-      // accessorKey: 'playDate',
       id: 'playDate',
       accessorFn: match => new Date(match.playDate).toLocaleDateString(),
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Play Date
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Play Date
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       id: 'outcome',
       accessorFn: match => matchOutcome(match),
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Outcome
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Outcome
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       id: 'actions',
@@ -182,61 +152,5 @@ export default function MatchTable({ matchesPromise }: Props) {
     },
   ];
 
-  const table = useReactTable({
-    data: matches,
-    columns,
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      sorting,
-    },
-  });
-
-  return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map(row => (
-              <TableRow
-                data-state={row.getIsSelected() && 'selected'}
-                key={row.id}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
-  );
+  return <PlayTable data={matches} columns={columns} />;
 }

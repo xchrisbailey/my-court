@@ -1,30 +1,16 @@
 'use client';
 
+import PlayTable from '@/components/play-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger } from '@/components/ui/popover';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { Practice } from '@/shared/types';
 import { PopoverClose, PopoverContent } from '@radix-ui/react-popover';
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown, Edit, Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { use, useState, useTransition } from 'react';
+import { use, useTransition } from 'react';
 import { deletePractice } from '../actions';
 
 type Props = {
@@ -34,86 +20,72 @@ type Props = {
 export default function PracticeTable({ practicesPromise }: Props) {
   const router = useRouter();
   const practices = use(practicesPromise);
-  const [sorting, setSorting] = useState<SortingState>([]);
   const [isPending, startTransition] = useTransition();
 
   const columns: ColumnDef<Practice>[] = [
     {
       accessorKey: 'type',
-      cell: ({ row }) => {
-        return (
-          <Badge variant="secondary">{row.original.type.toUpperCase()}</Badge>
-        );
-      },
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Type
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      cell: ({ row }) => (
+        <Badge variant="secondary">{row.original.type.toUpperCase()}</Badge>
+      ),
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Type
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'location',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Location
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Location
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'city',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            City
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          City
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       accessorKey: 'state',
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            State
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          State
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
-      // accessorKey: 'playDate',
       id: 'playDate',
       accessorFn: practice => new Date(practice.playDate).toLocaleDateString(),
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          >
-            Play Date
-            <ArrowUpDown className="ml-2 w-4 h-4" />
-          </Button>
-        );
-      },
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Play Date
+          <ArrowUpDown className="ml-2 w-4 h-4" />
+        </Button>
+      ),
     },
     {
       id: 'actions',
@@ -181,61 +153,5 @@ export default function PracticeTable({ practicesPromise }: Props) {
     },
   ];
 
-  const table = useReactTable({
-    data: practices,
-    columns,
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      sorting,
-    },
-  });
-
-  return (
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map(row => (
-              <TableRow
-                data-state={row.getIsSelected() && 'selected'}
-                key={row.id}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
-  );
+  return <PlayTable data={practices} columns={columns} />;
 }
