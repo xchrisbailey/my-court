@@ -1,10 +1,12 @@
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import { validateRequest } from '@/lib/auth';
 import { SessionProvider } from '@/lib/auth/context';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import SideBarView from './sidebar';
+import { Header } from './_layout/header';
+import SidebarComponent from './_layout/sidebar';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -30,10 +32,21 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider value={session}>
-          <SideBarView>
-            <main className="flex-1 p-4">{children}</main>
-          </SideBarView>
-          <Toaster position="top-center" />
+          <SidebarProvider
+            style={
+              {
+                '--sidebar-width': '19rem',
+              } as React.CSSProperties
+            }
+          >
+            <SidebarComponent />
+            <SidebarInset>
+              <Header />
+              <main className="flex-1 p-4">{children}</main>
+            </SidebarInset>
+
+            <Toaster position="top-center" />
+          </SidebarProvider>
         </SessionProvider>
       </body>
     </html>
