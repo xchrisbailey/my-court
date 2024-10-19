@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 export default async function RacketsPage() {
   return (
     <>
-      <h1>Rackets</h1>
       <Suspense fallback={<GearListSkeleton />}>
         <GearList racketsPromise={getRacketsWithBrand()} />
       </Suspense>

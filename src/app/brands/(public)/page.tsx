@@ -11,7 +11,6 @@ export default async function BrandsPage() {
 
   return (
     <>
-      <h1>Brands</h1>
       <Suspense fallback={<BrandsListSkeleton />}>
         <BrandsList brandsPromise={brandsPromise} />
       </Suspense>

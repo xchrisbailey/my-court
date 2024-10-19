@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 export default async function StringsPage() {
   return (
     <>
-      <h1>Strings</h1>
       <Suspense fallback={<GearListSkeleton />}>
         <GearList stringsPromise={getStringsWithBrand()} />
       </Suspense>
