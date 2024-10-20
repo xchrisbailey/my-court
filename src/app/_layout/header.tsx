@@ -18,13 +18,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Link, LogOut, User } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 export function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const brand = searchParams.get('brand');
+
+  console.log(pathname.split('/')[1]);
 
   return (
     <header className="flex justify-between items-center px-4 h-16 shrink-0">
@@ -42,8 +45,10 @@ export function Header() {
                 {brand ? (
                   <>
                     <BreadcrumbItem>
-                      <BreadcrumbLink href={`/${pathname.split('/')[1]}`}>
-                        {pathname.split('/')[1]}
+                      <BreadcrumbLink asChild>
+                        <Link href={pathname.split('/')[1]}>
+                          {pathname.split('/')[1]}
+                        </Link>
                       </BreadcrumbLink>
                     </BreadcrumbItem>
 
@@ -56,8 +61,10 @@ export function Header() {
                   <>
                     <BreadcrumbItem>
                       <BreadcrumbPage>
-                        <BreadcrumbLink href={pathname.split('/')[1]}>
-                          {pathname.split('/')[1]}
+                        <BreadcrumbLink asChild>
+                          <Link href={`/${pathname.split('/')[1]}`}>
+                            {pathname.split('/')[1]}
+                          </Link>
                         </BreadcrumbLink>
                       </BreadcrumbPage>
                     </BreadcrumbItem>
