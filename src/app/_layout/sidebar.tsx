@@ -13,6 +13,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { Trophy } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
@@ -65,14 +66,14 @@ export default function SidebarComponent() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="#">
                 <div className="flex justify-center items-center rounded-lg aspect-square size-8 bg-sidebar-primary text-sidebar-primary-foreground">
                   <Trophy className="size-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold">my court</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -83,9 +84,9 @@ export default function SidebarComponent() {
             {data.navMain.map(item => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
+                  <Link href={item.url} className="font-medium">
                     {item.title}
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub className="px-1.5 ml-0 border-l-0">
@@ -95,7 +96,7 @@ export default function SidebarComponent() {
                           asChild
                           isActive={pathname === item.url}
                         >
-                          <a href={item.url}>{item.title}</a>
+                          <Link href={item.url}>{item.title}</Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
