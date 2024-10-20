@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card';
 import { RacketWithRelations, StringWithRelations } from '@/shared/types';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import React, { use, type JSX } from 'react';
 
 type Props = {
@@ -18,14 +19,29 @@ type Props = {
 export function GearList({ racketsPromise, stringsPromise }: Props) {
   const rackets = racketsPromise ? use(racketsPromise) : null;
   const strings = stringsPromise ? use(stringsPromise) : null;
+  const searchParams = useSearchParams();
+  const brand: string | null = searchParams.get('brand');
 
   const gear: JSX.Element[] = [];
-  rackets?.map(racket =>
-    gear.push(<RacketListCard racket={racket} key={racket.id} />),
-  );
-  strings?.map(string =>
-    gear.push(<StringListCard string={string} key={string.id} />),
-  );
+  if (brand) {
+    rackets
+      ?.filter(racket => racket.brand.name === brand)
+      .map(racket =>
+        gear.push(<RacketListCard racket={racket} key={racket.id} />),
+      );
+    strings
+      ?.filter(string => string.brand.name === brand)
+      .map(string =>
+        gear.push(<StringListCard string={string} key={string.id} />),
+      );
+  } else {
+    rackets?.map(racket =>
+      gear.push(<RacketListCard racket={racket} key={racket.id} />),
+    );
+    strings?.map(string =>
+      gear.push(<StringListCard string={string} key={string.id} />),
+    );
+  }
 
   return (
     <div className="container py-2 mx-auto">
@@ -48,7 +64,10 @@ export function RacketListCard({ racket }: { racket: RacketWithRelations }) {
           <CardTitle className="mb-2 text-xl">{racket.model}</CardTitle>
           <CardDescription>
             <span className="block mb-1 text-sm text-muted-foreground">
-              Brand: {racket.brand.name}
+              Brand:{' '}
+              <Link href={`/rackets?brand=${racket.brand.name}`}>
+                {racket.brand.name}
+              </Link>
             </span>
             <span className="block text-sm text-muted-foreground">
               Year: {racket.year}
@@ -75,7 +94,10 @@ export function StringListCard({ string }: { string: StringWithRelations }) {
           <CardTitle className="mb-2 text-xl">{string.model}</CardTitle>
           <CardDescription>
             <span className="block mb-1 text-sm text-muted-foreground">
-              Brand: {string.brand.name}
+              Brand:{' '}
+              <Link href={`/strings?brand=${string.brand.name}`}>
+                {string.brand.name}
+              </Link>
             </span>
             <span className="block mb-1 text-sm text-muted-foreground">
               Composition: {string.composition}

@@ -19,11 +19,13 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Link, LogOut, User } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export function Header() {
   const pathname = usePathname();
-  console.log(pathname.split('/'));
+  const searchParams = useSearchParams();
+  const brand = searchParams.get('brand');
+
   return (
     <header className="flex justify-between items-center px-4 h-16 shrink-0">
       <div className="flex gap-2 items-center">
@@ -37,9 +39,30 @@ export function Header() {
             {pathname !== '/' ? (
               <>
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{pathname.split('/')[1]}</BreadcrumbPage>
-                </BreadcrumbItem>
+                {brand ? (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href={`/${pathname.split('/')[1]}`}>
+                        {pathname.split('/')[1]}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+
+                    <BreadcrumbSeparator className="hidden md:block" />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{brand}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                ) : (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>
+                        <BreadcrumbLink href={pathname.split('/')[1]}>
+                          {pathname.split('/')[1]}
+                        </BreadcrumbLink>
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                )}
               </>
             ) : null}
           </BreadcrumbList>
