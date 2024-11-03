@@ -82,7 +82,9 @@ export function Header() {
               src="/placeholder.svg?height=32&width=32"
               alt="User avatar"
             />
-            <AvatarFallback>U</AvatarFallback>
+            <AvatarFallback>
+              <User className="w-5 h-5" />
+            </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
