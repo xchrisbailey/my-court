@@ -27,7 +27,7 @@ describe('StringListCard', () => {
 
   it('renders the string brand', () => {
     const { getByText } = render(<StringListCard string={mockString} />);
-    expect(getByText('BrandA')).toBeInTheDocument();
+    expect(getByText(/BrandA/)).toBeInTheDocument();
   });
 
   it('renders the string composition', () => {
@@ -74,7 +74,7 @@ describe('RacketListCard', () => {
 
   it('renders the racket brand', () => {
     const { getByText } = render(<RacketListCard racket={mockRacket} />);
-    expect(getByText('BrandA')).toBeInTheDocument();
+    expect(getByText(/BrandA/)).toBeInTheDocument();
   });
 
   it('renders the racket year', () => {

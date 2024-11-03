@@ -64,10 +64,7 @@ export function RacketListCard({ racket }: { racket: RacketWithRelations }) {
           <CardTitle className="mb-2 text-xl">{racket.model}</CardTitle>
           <CardDescription>
             <span className="block mb-1 text-sm text-muted-foreground">
-              Brand:{' '}
-              <Link href={`/rackets?brand=${racket.brand.name}`}>
-                {racket.brand.name}
-              </Link>
+              Brand: {racket.brand.name}
             </span>
             <span className="block text-sm text-muted-foreground">
               Year: {racket.year}
@@ -94,10 +91,7 @@ export function StringListCard({ string }: { string: StringWithRelations }) {
           <CardTitle className="mb-2 text-xl">{string.model}</CardTitle>
           <CardDescription>
             <span className="block mb-1 text-sm text-muted-foreground">
-              Brand:{' '}
-              <Link href={`/strings?brand=${string.brand.name}`}>
-                {string.brand.name}
-              </Link>
+              Brand: {string.brand.name}
             </span>
             <span className="block mb-1 text-sm text-muted-foreground">
               Composition: {string.composition}
